@@ -9,8 +9,8 @@ CameraSubsystem::CameraSubsystem(){
 
 void CameraSubsystem::robotInit(){
     operatorJoystick->RegisterButton(CORE::COREJoystick::JoystickButton::X_BUTTON);
-  cameraSelection = nt::NetworkTableInstance::GetDefault().GetTable("")->GetEntry("CameraSelection");
-    // cameraSelection.SetString("rPi Camera 0");
+  cameraSelection = nt::NetworkTableInstance::GetDefault().GetTable("")->GetEntry("CameraServer");
+    cameraSelection.SetString("rPi Camera 0");
 }
 
 
