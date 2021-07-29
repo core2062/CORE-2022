@@ -4,7 +4,7 @@ using namespace CORE;
 
 LauncherSubsystem::LauncherSubsystem() : 
                                         m_launcherMotor(BOTTOM_LAUNCHER_MOTOR_PORT), 
-                                        m_launcherSpeed("Launcher Velocity", 0.42) {
+                                        m_launcherSpeed("Launcher Velocity", /*0.42*/ 20) {
 }
 
 void LauncherSubsystem::robotInit() {
