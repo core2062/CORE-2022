@@ -2,7 +2,7 @@
 
 IntakeSubsystem::IntakeSubsystem() : 
                                      m_intakeMotor(INTAKE_PORT), 
-                                     m_intakeSolenoid(LEFT_DRIVE_SHIFTER_PCM, INTAKE_DOWN_PORT, INTAKE_UP_PORT),
+                                     m_intakeSolenoid(LEFT_DRIVE_SHIFTER_PCM, frc::PneumaticsModuleType::CTREPCM, INTAKE_DOWN_PORT, INTAKE_UP_PORT),
                                      intakeSpeed("Intake Speed", 0.45){
 }
 

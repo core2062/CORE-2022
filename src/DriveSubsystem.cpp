@@ -9,9 +9,9 @@ DriveSubsystem::DriveSubsystem() :
         m_etherBValue("Ether B Value", .4),
 		m_etherQuickTurnValue("Ether Quick Turn Value", 1.0),
         m_ticksPerInch("Ticks Per Inch", (4 * 3.1415) / 1024),
-        m_leftDriveShifter(LEFT_DRIVE_SHIFTER_PCM, LEFT_DRIVE_SHIFTER_HIGH_GEAR_PORT, LEFT_DRIVE_SHIFTER_LOW_GEAR_PORT),
-        m_rightDriveShifter(RIGHT_DRIVE_SHIFTER_PCM, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
-		compressor(COMPRESSOR_PCM) {
+        m_leftDriveShifter(LEFT_DRIVE_SHIFTER_PCM, frc::PneumaticsModuleType::CTREPCM, LEFT_DRIVE_SHIFTER_HIGH_GEAR_PORT, LEFT_DRIVE_SHIFTER_LOW_GEAR_PORT),
+        m_rightDriveShifter(RIGHT_DRIVE_SHIFTER_PCM, frc::PneumaticsModuleType::CTREPCM, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
+		compressor(COMPRESSOR_PCM,frc::PneumaticsModuleType::CTREPCM) {
 }
 
 void DriveSubsystem::robotInit() {
@@ -99,9 +99,9 @@ void DriveSubsystem::teleopEnd() {}
 void DriveSubsystem::fillCompressor() {
 	// Code to run the compressor. Maybe should be moved to Robot?
 	if (compressor.GetPressureSwitchValue()) {
-		compressor.SetClosedLoopControl(false);
+		compressor.Start();
 	} else {
-		compressor.SetClosedLoopControl(true);
+		compressor.Stop();
 	}
 }
 

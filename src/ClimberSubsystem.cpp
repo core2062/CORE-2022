@@ -1,6 +1,6 @@
 #include "ClimberSubsystem.h"
-ClimberSubsystem :: ClimberSubsystem() : m_climberOne(CLIMBER_PCM, CLIMBER_RIGHT_UP_PORT, CLIMBER_RIGHT_DOWN_PORT),
-                                         m_climberTwo(CLIMBER_PCM, CLIMBER_LEFT_UP_PORT, CLIMBER_LEFT_DOWN_PORT){
+ClimberSubsystem :: ClimberSubsystem() : m_climberOne(CLIMBER_PCM, frc::PneumaticsModuleType::CTREPCM, CLIMBER_RIGHT_UP_PORT, CLIMBER_RIGHT_DOWN_PORT),
+                                         m_climberTwo(CLIMBER_PCM, frc::PneumaticsModuleType::CTREPCM, CLIMBER_LEFT_UP_PORT, CLIMBER_LEFT_DOWN_PORT){
 
 }
 void ClimberSubsystem::robotInit() {
