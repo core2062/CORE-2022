@@ -61,7 +61,7 @@ model {
 
             sources.cpp {
                 source {
-                    srcDir 'src/main/cpp'
+                    srcDir 'src'
                     include '**/*.cpp', '**/*.cc'
                 }
                 exportedHeaders {
@@ -90,7 +90,7 @@ model {
 
             sources.cpp {
                 source {
-                    srcDir 'src/test/cpp'
+                    srcDir 'src'
                     include '**/*.cpp'
                 }
             }
