@@ -9,9 +9,9 @@ DriveSubsystem::DriveSubsystem() :
         m_etherBValue("Ether B Value", .4),
 		m_etherQuickTurnValue("Ether Quick Turn Value", 1.0),
         m_ticksPerInch("Ticks Per Inch", (4 * 3.1415) / 1024),
-        m_leftDriveShifter(LEFT_DRIVE_SHIFTER_PCM, LEFT_DRIVE_SHIFTER_HIGH_GEAR_PORT, LEFT_DRIVE_SHIFTER_LOW_GEAR_PORT),
-        m_rightDriveShifter(RIGHT_DRIVE_SHIFTER_PCM, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
-		compressor(COMPRESSOR_PCM) {
+        m_leftDriveShifter(LEFT_DRIVE_SHIFTER_PCM, frc::PneumaticsModuleType::CTREPCM, LEFT_DRIVE_SHIFTER_HIGH_GEAR_PORT, LEFT_DRIVE_SHIFTER_LOW_GEAR_PORT),
+        m_rightDriveShifter(RIGHT_DRIVE_SHIFTER_PCM, frc::PneumaticsModuleType::CTREPCM, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
+		m_compressor(COMPRESSOR_PCM,frc::PneumaticsModuleType::CTREPCM) {
 }
 
 void DriveSubsystem::robotInit() {
@@ -27,6 +27,7 @@ void DriveSubsystem::teleopInit() {
 	COREEtherDrive::SetAB(m_etherAValue.Get(), m_etherBValue.Get());
 	COREEtherDrive::SetQuickturn(m_etherQuickTurnValue.Get());
 	initTalons();
+	m_compressor.EnableDigital();
 }
 
 void DriveSubsystem::teleop() {
@@ -45,7 +46,6 @@ void DriveSubsystem::teleop() {
 	if(driverJoystick->GetRisingEdge(CORE::COREJoystick::JoystickButton::RIGHT_TRIGGER)) {
 		toggleGear();
 	}
-	fillCompressor();
 }
 
 void DriveSubsystem::setMotorSpeed(double speedInFraction, DriveSide whichSide) {
@@ -94,24 +94,19 @@ void DriveSubsystem::initTalons() {
 	m_rightSlave.SetInverted(true);
 }
 
-void DriveSubsystem::teleopEnd() {}
-
-void DriveSubsystem::fillCompressor() {
-	// Code to run the compressor. Maybe should be moved to Robot?
-	if (compressor.GetPressureSwitchValue()) {
-		compressor.SetClosedLoopControl(false);
-	} else {
-		compressor.SetClosedLoopControl(true);
-	}
+void DriveSubsystem::teleopEnd() {
+	m_compressor.Disable();
 }
 
 void DriveSubsystem::toggleGear() {
 	// Shifts from high gear to low gear or vice versa
 	if (m_highGear) {
-		m_leftDriveShifter.Set(DoubleSolenoid::kForward);
+		m_leftDriveShifter.Set(DoubleSolenoid::Value::kForward);
+		m_rightDriveShifter.Set(DoubleSolenoid::Value::kForward);
 		m_highGear = false;
 	} else {
-		m_leftDriveShifter.Set(DoubleSolenoid::kReverse);
+		m_leftDriveShifter.Set(DoubleSolenoid::Value::kReverse);
+		m_rightDriveShifter.Set(DoubleSolenoid::Value::kReverse);
 		m_highGear = true;
 	}
 }

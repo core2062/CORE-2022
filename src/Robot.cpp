@@ -1,9 +1,10 @@
-#include <Robot.h>
+#include "Robot.h"
 
 Robot* Robot::m_instance;
 
 Robot::Robot() {
-	m_instance = this;
+    CORELog::LogInfo("Starting up Robot!");
+    m_instance = this;
 }
 
 void Robot::teleop() {}
@@ -17,11 +18,11 @@ void Robot::test() {}
 void Robot::testInit() {}
 
 Robot * Robot::GetInstance() {
-	return m_instance;
+    return m_instance;
 }
 
 #ifndef RUNNING_FRC_TESTS
 int main() {
-	return frc::StartRobot<Robot>();
+    return frc::StartRobot<Robot>();
 }
-#endif
+ #endif
