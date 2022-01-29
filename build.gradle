@@ -54,13 +54,20 @@ model {
                 targetPlatform wpi.platforms.desktop
             }
 
+            binaries.all {
+                cppCompiler.args('-g')
+                linker.args("-L../CORERobotLib/lib/debug",'-lCORERobotLib')
+            }
+
             sources.cpp {
                 source {
                     srcDir 'src/main/cpp'
                     include '**/*.cpp', '**/*.cc'
                 }
                 exportedHeaders {
-                    srcDir 'src/main/include'
+                    srcDir 'src'
+                    srcDir '../CORERobotLib/src' 
+                    srcDir '../CORERobotLib/3rdparty/json/src/'
                 }
             }
 
