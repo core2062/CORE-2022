@@ -7,6 +7,10 @@
 #include <COREFramework/COREScheduler.h>
 
 #include "DriveSubsystem.h"
+#include "IntakeSubsystem.h"
+#include "ConveyorSubsystem.h"
+#include "LauncherSubsystem.h"
+#include "ClimberSubsystem.h"
 
 using namespace CORE;
 using namespace std;
