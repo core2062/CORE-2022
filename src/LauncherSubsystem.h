@@ -9,11 +9,16 @@ using namespace frc;
 
 
 class LauncherSubsystem : public CORESubsystem {
-public:
-	LauncherSubsystem();
-    void robotInit() override;
-    void teleopInit() override;
-    void teleop() override;
+    public:
+	    LauncherSubsystem();
+        void robotInit() override;
+        void teleopInit() override;
+        void teleop() override;
 
-private:
+        COREConstant<double> forwardSpeed, backwardSpeed;
+
+    private:
+        TalonSRX m_rightFeed, m_leftFeed;
+        TalonFX m_rightLauncher, m_leftLauncher;
+
 };
