@@ -7,7 +7,7 @@ LauncherSubsystem::LauncherSubsystem() :m_rightFeed(RIGHT_FEED),
                                         m_rightLauncher(RIGHT_LAUNCHER),
                                         m_leftLauncher(LEFT_LAUNCHER),
                                         forwardSpeed("Launcher Forward Speed", 0.6),
-                                        backwardSpeed("Launcher Backward Speed", 0.2)  {
+                                        backwardSpeed("Launcher Backward Speed", -0.2)  {
                                         
 }
 
@@ -21,19 +21,22 @@ void LauncherSubsystem::robotInit(){
 }
 
 void LauncherSubsystem::teleopInit() {
-
+    SmartDashboard::PutString("Launcher Controls", " Launcher Out: Left Trigger \n Launcher Reverse: Left Button");
 }
 
 void LauncherSubsystem::teleop() {
-    if (operatorJoystick->GetButton(CORE::COREJoystick::LEFT_BUTTON)) {
-        m_leftFeed.Set(ControlMode::PercentOutput, forwardSpeed.Get());
-        m_rightFeed.Set(ControlMode::PercentOutput, -forwardSpeed.Get());
-        m_leftLauncher.Set(ControlMode::PercentOutput, forwardSpeed.Get());
-        m_rightLauncher.Set(ControlMode::PercentOutput, -forwardSpeed.Get());
-    } else if (operatorJoystick->GetButton(CORE::COREJoystick::LEFT_TRIGGER)) {
-        m_leftFeed.Set(ControlMode::PercentOutput, backwardSpeed.Get());
-        m_rightFeed.Set(ControlMode::PercentOutput, -backwardSpeed.Get());
-        m_leftLauncher.Set(ControlMode::PercentOutput, backwardSpeed.Get());
-        m_rightLauncher.Set(ControlMode::PercentOutput, -backwardSpeed.Get());
+    if (operatorJoystick->GetButton(CORE::COREJoystick::LEFT_TRIGGER)) {
+        setLauncherSpeed(forwardSpeed.Get());
+    } else if (operatorJoystick->GetButton(CORE::COREJoystick::LEFT_BUTTON)) {
+        setLauncherSpeed(backwardSpeed.Get());
+    } else {
+        setLauncherSpeed(0);
     }
+}
+
+void LauncherSubsystem::setLauncherSpeed(double launcherSpeed) {
+        m_leftFeed.Set(ControlMode::PercentOutput, launcherSpeed);
+        m_rightFeed.Set(ControlMode::PercentOutput, -launcherSpeed);
+        m_leftLauncher.Set(ControlMode::PercentOutput, launcherSpeed);
+        m_rightLauncher.Set(ControlMode::PercentOutput, -launcherSpeed);
 }

@@ -14,6 +14,7 @@ class LauncherSubsystem : public CORESubsystem {
         void robotInit() override;
         void teleopInit() override;
         void teleop() override;
+        void setLauncherSpeed(double launcherSpeed);
 
         COREConstant<double> forwardSpeed, backwardSpeed;
 

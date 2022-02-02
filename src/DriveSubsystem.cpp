@@ -28,6 +28,7 @@ void DriveSubsystem::teleopInit() {
 	COREEtherDrive::SetQuickturn(m_etherQuickTurnValue.Get());
 	initTalons();
 	m_compressor.EnableDigital();
+	SmartDashboard::PutString("Drive Controls", " Forward/Back: Left Stick \n Right/Left: Right Stick \n Shift: Right Trigger");
 }
 
 void DriveSubsystem::teleop() {

@@ -12,13 +12,17 @@ void ConveyorSubsystem::robotInit(){
     operatorJoystick->RegisterButton(CORE::COREJoystick::JoystickButton::RIGHT_BUTTON);
 }
 
-void ConveyorSubsystem::teleopInit() {}
+void ConveyorSubsystem::teleopInit() {
+	SmartDashboard::PutString("Conveyor Controls", " In: Right Trigger \n Out: Right Button");
+}
 
 void ConveyorSubsystem::teleop(){
     if(operatorJoystick->GetButton(CORE::COREJoystick::JoystickButton::RIGHT_TRIGGER)) {
         setConveyorMotor(conveyorForwardSpeed.Get());
     } else if(operatorJoystick->GetButton(CORE::COREJoystick::JoystickButton::RIGHT_BUTTON)) {
         setConveyorMotor(conveyorReverseSpeed.Get());
+    } else {
+        setConveyorMotor(0);
     }
 }
 

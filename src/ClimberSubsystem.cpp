@@ -9,7 +9,9 @@ void ClimberSubsystem::robotInit(){
 
 }
 
-void ClimberSubsystem::teleopInit() {}
+void ClimberSubsystem::teleopInit() {
+	SmartDashboard::PutString("Climber Controls", " Toggle: ");
+}
 
 void ClimberSubsystem::teleop(){
 }

@@ -12,6 +12,12 @@
 /* Conveyor ports */
 #define CONVEYOR_PORT 6
 
+/* Launcher */
+#define RIGHT_FEED 7
+#define LEFT_FEED 8
+#define RIGHT_LAUNCHER 9
+#define LEFT_LAUNCHER 10
+
 /* Solenoids */
 #define COMPRESSOR_PCM 2
 #define RIGHT_DRIVE_SHIFTER_PCM 2
@@ -20,9 +26,3 @@
 #define RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT 7
 #define LEFT_DRIVE_SHIFTER_LOW_GEAR_PORT 0
 #define LEFT_DRIVE_SHIFTER_HIGH_GEAR_PORT 1
-
-/* Launcher */
-#define RIGHT_FEED 10
-#define LEFT_FEED 11
-#define RIGHT_LAUNCHER 12
-#define LEFT_LAUNCHER 13

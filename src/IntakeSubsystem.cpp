@@ -3,8 +3,8 @@
 using namespace CORE;
 
 IntakeSubsystem::IntakeSubsystem() :
-    m_intakeMotor(INTAKE_PORT),
-    intakeSpeed("Intake Speed", 0.20) {
+                                    m_intakeMotor(INTAKE_PORT),
+                                    intakeSpeed("Intake Speed", 0.20) {
 
 }
 
@@ -16,7 +16,9 @@ void IntakeSubsystem::robotInit(){
 }
 
 
-void IntakeSubsystem::teleopInit() {}
+void IntakeSubsystem::teleopInit() {
+	SmartDashboard::PutString("Intake Controls", " In: Right Trigger \n Out: Right Button");
+}
 
 void IntakeSubsystem::teleop(){
     if(operatorJoystick->GetButton(CORE::COREJoystick::JoystickButton::RIGHT_TRIGGER)) {
