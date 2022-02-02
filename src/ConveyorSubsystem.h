@@ -14,6 +14,11 @@ public:
     void robotInit() override;
     void teleopInit() override;
     void teleop() override;
+    void setConveyorMotor(double conveyorSpeed);
+
+    COREConstant<double> conveyorForwardSpeed;
+    COREConstant<double> conveyorReverseSpeed;
 
 private:
+    TalonSRX m_conveyorMotor;
 };
