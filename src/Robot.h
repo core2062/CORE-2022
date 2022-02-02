@@ -25,6 +25,7 @@ class Robot : public CORERobot {
         void testInit() override;
         static Robot * GetInstance();
         DriveSubsystem driveSubsystem;
+        LauncherSubsystem launcherSubsystem;
     private:
         static Robot * m_instance;
 };
