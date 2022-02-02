@@ -20,6 +20,5 @@ public:
     COREConstant<double> intakeSpeed;
 private:
 TalonSRX m_intakeMotor;
-#define INTAKE_PORT 42
-//replace x with port number
+#define INTAKE_PORT 5
 };
