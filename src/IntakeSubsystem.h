@@ -14,6 +14,12 @@ public:
     void robotInit() override;
     void teleopInit() override;
     void teleop() override;
+    void SetIntake(double intakeSpeed);
+    void ToggleIntake();
 
+    COREConstant<double> intakeSpeed;
 private:
+TalonSRX m_intakeMotor;
+#define INTAKE_PORT 42
+//replace x with port number
 };
