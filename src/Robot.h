@@ -11,9 +11,10 @@
 #include "ConveyorSubsystem.h"
 #include "LauncherSubsystem.h"
 #include "ClimberSubsystem.h"
+#include "Config.h"
 
-#include "Auton/TestRoutine.h"
-#include "Auton/DriveRoutine.h"
+// #include "Auton/TestRoutine.h"
+// #include "Auton/DriveRoutine.h"
 
 using namespace CORE;
 using namespace std;
@@ -32,6 +33,7 @@ class Robot : public CORERobot {
         ConveyorSubsystem conveyorSubsystem;
         LauncherSubsystem launcherSubsystem;
         // ClimberSubsystem climberSubsystem;
+        // DriveRoutine driveRoutine;
     private:
         static Robot * m_instance;
 };
