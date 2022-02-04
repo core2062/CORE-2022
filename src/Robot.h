@@ -12,6 +12,9 @@
 #include "LauncherSubsystem.h"
 #include "ClimberSubsystem.h"
 
+#include "Auton/TestRoutine.h"
+#include "Auton/DriveRoutine.h"
+
 using namespace CORE;
 using namespace std;
 

@@ -2,14 +2,16 @@
 
 #include <string>
 #include <CORERobotLib.h>
-// Include Actions being used
+#include "DriveAction.h"
+// #include "AutonActionTest.h"
 
 using namespace CORE;
 using namespace std;
 
-class TestRoutine: public COREAuton {
+class DriveRoutine: public COREAuton {
 public:
-    TestRoutine();
+    DriveRoutine();
     void AddNodes() override;
 private:
+    Node * driveNode;
 };
