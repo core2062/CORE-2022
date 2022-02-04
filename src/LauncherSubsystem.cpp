@@ -40,3 +40,4 @@ void LauncherSubsystem::setLauncherSpeed(double launcherSpeed) {
         m_leftLauncher.Set(ControlMode::PercentOutput, launcherSpeed);
         m_rightLauncher.Set(ControlMode::PercentOutput, -launcherSpeed);
 }
+
