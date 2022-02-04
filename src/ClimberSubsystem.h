@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ctre/Phoenix.h>
+#include <frc/DoubleSolenoid.h>
 #include <CORERobotLib.h>
 #include "Config.h"
 
@@ -15,5 +16,12 @@ public:
     void teleopInit() override;
     void teleop() override;
 
+    void solenoidClimb();
+    void talonClimb();
+
+    COREConstant<double> climberSpeed;
+
 private:
+    TalonFX m_leftTalon, m_rightTalon;
+    DoubleSolenoid m_leftSolenoid, m_rightSolenoid;
 };
