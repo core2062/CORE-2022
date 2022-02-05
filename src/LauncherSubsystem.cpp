@@ -2,12 +2,11 @@
 
 using namespace CORE;
 
-LauncherSubsystem::LauncherSubsystem() :m_rightFeed(RIGHT_FEED),
+LauncherSubsystem::LauncherSubsystem() :forwardSpeed("Launcher Forward Speed", 0.6),
+                                        backwardSpeed("Launcher Backward Speed", -0.2),m_rightFeed(RIGHT_FEED),
                                         m_leftFeed(LEFT_FEED),
                                         m_rightLauncher(RIGHT_LAUNCHER),
-                                        m_leftLauncher(LEFT_LAUNCHER),
-                                        forwardSpeed("Launcher Forward Speed", 0.6),
-                                        backwardSpeed("Launcher Backward Speed", -0.2)  {
+                                        m_leftLauncher(LEFT_LAUNCHER) {
                                         
 }
 

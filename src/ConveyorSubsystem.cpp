@@ -2,9 +2,9 @@
 
 // using namespace CORE;
 
-ConveyorSubsystem::ConveyorSubsystem() : m_conveyorMotor(CONVEYOR_PORT),
-                                        conveyorForwardSpeed("Conveyor Forward Speed", 0.25),
-                                        conveyorReverseSpeed("Conveyor Reverse Speed", -0.1) {
+ConveyorSubsystem::ConveyorSubsystem() :conveyorForwardSpeed("Conveyor Forward Speed", 0.25),
+                                        conveyorReverseSpeed("Conveyor Reverse Speed", -0.1),
+                                        m_conveyorMotor(CONVEYOR_PORT) {
 }
 
 void ConveyorSubsystem::robotInit(){

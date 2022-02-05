@@ -3,8 +3,8 @@
 using namespace CORE;
 
 IntakeSubsystem::IntakeSubsystem() :
-                                    m_intakeMotor(INTAKE_PORT),
-                                    intakeSpeed("Intake Speed", 0.20) {
+                                    intakeSpeed("Intake Speed", 0.20),
+                                    m_intakeMotor(INTAKE_PORT) {
 
 }
 
