@@ -18,13 +18,6 @@ DriveSubsystem::DriveSubsystem() :
 }
 
 void DriveSubsystem::robotInit() {
-	// try {
-    // } catch (std::exception ex ) {
-        // std::string err_string = "Error instantiating navX-MXP:  ";
-        // err_string += ex.what();
-		// CORELog::LogError(err_string.c_str());
-    // }
-	// analogInput = new AnalogInput(0);
 	// Registers joystick axis and buttons, does inital setup for talons
 	driverJoystick->RegisterAxis(CORE::COREJoystick::LEFT_STICK_Y);
 	driverJoystick->RegisterAxis(CORE::COREJoystick::RIGHT_STICK_X);
@@ -43,7 +36,7 @@ void DriveSubsystem::teleopInit() {
 
 void DriveSubsystem::teleop() {
 	// Code for teleop. Sets motor speed based on the values for the joystick, runs compressor,
-	// toggles gears
+	// Toggles gears
     double mag = -driverJoystick->GetAxis(CORE::COREJoystick::JoystickAxis::LEFT_STICK_Y);
 	double rot = driverJoystick->GetAxis(CORE::COREJoystick::JoystickAxis::RIGHT_STICK_X);
 
