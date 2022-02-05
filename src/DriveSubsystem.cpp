@@ -1,6 +1,7 @@
 #include "DriveSubsystem.h"
 
 DriveSubsystem::DriveSubsystem() :
+		ahrs(SerialPort::Port::kUSB1),
 		m_leftMaster(LEFT_FRONT_PORT),
 		m_rightMaster(RIGHT_FRONT_PORT),
 		m_leftSlave(LEFT_BACK_PORT),
@@ -9,9 +10,8 @@ DriveSubsystem::DriveSubsystem() :
         m_etherBValue("Ether B Value", .4),
 		m_etherQuickTurnValue("Ether Quick Turn Value", 1.0),
         m_ticksPerInch("Ticks Per Inch", (4 * 3.1415) / 1024),
-        m_leftDriveShifter(LEFT_DRIVE_SHIFTER_PCM, frc::PneumaticsModuleType::CTREPCM, LEFT_DRIVE_SHIFTER_HIGH_GEAR_PORT, LEFT_DRIVE_SHIFTER_LOW_GEAR_PORT),
         m_rightDriveShifter(RIGHT_DRIVE_SHIFTER_PCM, frc::PneumaticsModuleType::CTREPCM, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
-		m_compressor(COMPRESSOR_PCM,frc::PneumaticsModuleType::CTREPCM) {
+		m_compressor(COMPRESSOR_PCM,frc::PneumaticsModuleType::CTREPCM){
 }
 
 void DriveSubsystem::robotInit() {
@@ -33,8 +33,8 @@ void DriveSubsystem::teleopInit() {
 void DriveSubsystem::teleop() {
 	// Code for teleop. Sets motor speed based on the values for the joystick, runs compressor,
 	// toggles gears
-    double mag = -driverJoystick->GetAxis(CORE::COREJoystick::JoystickAxis::LEFT_STICK_Y);
-	double rot = driverJoystick->GetAxis(CORE::COREJoystick::JoystickAxis::RIGHT_STICK_X);
+    double mag = driverJoystick->GetAxis(CORE::COREJoystick::JoystickAxis::LEFT_STICK_Y);
+	double rot = -driverJoystick->GetAxis(CORE::COREJoystick::JoystickAxis::RIGHT_STICK_X);
 
 	VelocityPair speeds = COREEtherDrive::Calculate(mag, rot, .1);
 	setMotorSpeed(speeds.left, speeds.right);
@@ -42,6 +42,8 @@ void DriveSubsystem::teleop() {
 	SmartDashboard::PutNumber("Right side speed", speeds.right);
 	SmartDashboard::PutNumber("Left side encoder", m_leftMaster.GetSelectedSensorPosition(0));
 	SmartDashboard::PutNumber("Right side encoder", m_rightMaster.GetSelectedSensorPosition(0));
+
+	SmartDashboard::PutNumber("Robot Heading", ahrs.GetFusedHeading());
 
 	if(driverJoystick->GetRisingEdge(CORE::COREJoystick::JoystickButton::RIGHT_TRIGGER)) {
 		toggleGear();
@@ -101,11 +103,9 @@ void DriveSubsystem::teleopEnd() {
 void DriveSubsystem::toggleGear() {
 	// Shifts from high gear to low gear or vice versa
 	if (m_highGear) {
-		m_leftDriveShifter.Set(DoubleSolenoid::Value::kForward);
 		m_rightDriveShifter.Set(DoubleSolenoid::Value::kForward);
 		m_highGear = false;
 	} else {
-		m_leftDriveShifter.Set(DoubleSolenoid::Value::kReverse);
 		m_rightDriveShifter.Set(DoubleSolenoid::Value::kReverse);
 		m_highGear = true;
 	}
