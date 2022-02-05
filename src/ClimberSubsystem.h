@@ -16,12 +16,13 @@ public:
     void teleopInit() override;
     void teleop() override;
 
+    void talonClimb(double);
     void solenoidClimb();
-    void talonClimb();
 
-    COREConstant<double> climberSpeed;
+    COREConstant<double> climberOutSpeed,climberInSpeed;
 
 private:
-    TalonFX m_leftTalon, m_rightTalon;
-    DoubleSolenoid m_leftSolenoid, m_rightSolenoid;
+    TalonFX m_rightTalon, m_leftTalon;
+    DoubleSolenoid m_rightSolenoid, m_leftSolenoid;
+    bool m_solenoidClimberToggled;
 };
