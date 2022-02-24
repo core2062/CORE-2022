@@ -1,7 +1,7 @@
 plugins {
     id "cpp"
     id "google-test-test-suite"
-    id "edu.wpi.first.GradleRIO" version "2022.2.1"
+    id "edu.wpi.first.GradleRIO" version "2022.3.1"
 }
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
@@ -54,20 +54,13 @@ model {
                 targetPlatform wpi.platforms.desktop
             }
 
-            binaries.all {
-                cppCompiler.args('-g')
-                linker.args("-L../CORERobotLib/lib/debug",'-lCORERobotLib')
-            }
-
             sources.cpp {
                 source {
-                    srcDir 'src'
+                    srcDir 'src/main/cpp'
                     include '**/*.cpp', '**/*.cc'
                 }
                 exportedHeaders {
-                    srcDir 'src'
-                    srcDir '../CORERobotLib/src' 
-                    srcDir '../CORERobotLib/3rdparty/json/src/'
+                    srcDir 'src/main/include'
                 }
             }
 
@@ -90,7 +83,7 @@ model {
 
             sources.cpp {
                 source {
-                    srcDir 'src'
+                    srcDir 'src/test/cpp'
                     include '**/*.cpp'
                 }
             }
