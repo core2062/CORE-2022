@@ -27,11 +27,11 @@
 
 namespace DriveConstants {
 constexpr auto kTrackwidth = 0.60325_m; 
-// constexpr auto kTrackwidth = 0.69_m;
 extern const frc::DifferentialDriveKinematics kDriveKinematics;
 
 constexpr int kEncoderCPR = 2048;
 constexpr double kGearReduction = 0.23333333333;
+// constexpr double kGearReduction = 4.2857;
 constexpr double kWheelDiameterInches = 6;
 constexpr double kEncoderDistancePerPulse =
     // Assumes the encoders are directly mounted on the wheel shafts
@@ -39,20 +39,18 @@ constexpr double kEncoderDistancePerPulse =
 
 constexpr bool kGyroReversed = true;
 
-constexpr auto ks = 0.60904_V;
-// constexpr auto kv = 11.238 * 1_V * 1_s / 1_m;
-constexpr auto kv = 0.024704 * 1_V * 1_s / 1_m;
-constexpr auto ka = 0.0036443 * 1_V * 1_s * 1_s / 1_m;
+constexpr auto ks = 0.86138_V;
+constexpr auto kv = 1.7522 * 1_V * 1_s / 1_m;
+constexpr auto ka = 0.36649 * 1_V * 1_s * 1_s / 1_m;
 
-constexpr double kPDriveVel = 0.16995;
+constexpr double kPDriveVel = 2.6183;
 }
 
 namespace AutoConstants {
 constexpr auto kMaxSpeed = 3_mps;
 constexpr auto kMaxAcceleration = 3_mps_sq;
 
-// Reasonable baseline values for a RAMSETE follower in units of meters and
-// seconds
-constexpr double kRamseteB = 2;
-constexpr double kRamseteZeta = 0.7;
+
+constexpr auto kRamseteB = 2.0 * 1_rad * 1_rad / (1_m * 1_m);
+constexpr auto kRamseteZeta = 0.7 / 1_rad;
 }  // namespace AutoConstants
