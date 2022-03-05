@@ -4,8 +4,8 @@
 
 ClimberSubsystem::ClimberSubsystem() :  m_rightTalon(RIGHT_CLIMBER_PORT),
 										m_leftTalon(LEFT_CLIMBER_PORT),
-										m_rightSolenoid(CLIMBER_PCM, frc::PneumaticsModuleType::CTREPCM, RIGHT_CLIMBER_HIGH_PORT, RIGHT_CLIMBER_LOW_PORT), 
-										m_leftSolenoid(CLIMBER_PCM, frc::PneumaticsModuleType::CTREPCM, LEFT_CLIMBER_HIGH_PORT, LEFT_CLIMBER_LOW_PORT),
+										m_rightSolenoid(frc::PneumaticsModuleType::REVPH, RIGHT_CLIMBER_HIGH_PORT, RIGHT_CLIMBER_LOW_PORT), 
+										m_leftSolenoid(frc::PneumaticsModuleType::REVPH, LEFT_CLIMBER_HIGH_PORT, LEFT_CLIMBER_LOW_PORT),
 										climberOutSpeed("Climb Out Speed", 0.25),
 										climberInSpeed("Climb Reverse Speed", -0.1) {
 }
