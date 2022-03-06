@@ -7,6 +7,8 @@
 using namespace CORE;
 
 enum intakeAction{
+    EXTEND,
+    RETRACT,
     INTAKE,
     OUTTAKE,
     STOP

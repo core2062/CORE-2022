@@ -12,6 +12,10 @@ void IntakeAction::ActionInit() {
 
 CORE::COREAutonAction::actionStatus IntakeAction::Action() {
     switch(m_intakeAction) {
+        case EXTEND:
+            Robot::GetInstance()->intakeSubsystem.ExtendIntake(true);
+            break;
+            Robot::GetInstance()->intakeSubsystem.ExtendIntake(false);
         case INTAKE:
             Robot::GetInstance()->intakeSubsystem.SetIntake(m_intakeSpeed);
             break;

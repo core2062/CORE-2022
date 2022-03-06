@@ -17,6 +17,7 @@ public:
     void AddNodes() override;
 private:
     Node * delayNode;
+    Node * extendNode;
     Node * launcherOnNode;
     Node * conveyorOnNode;
     Node * intakeOnNode;

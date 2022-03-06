@@ -4,6 +4,7 @@ ThreeBallRoutine::ThreeBallRoutine() : COREAuton("Three Ball Fire Routine") {}
 
 void ThreeBallRoutine::AddNodes() {
     driveNode1 = new Node(5, new DriveAction(BACKWARD));
+    extendNode = new Node(5, new IntakeAction(EXTEND));
     driveNode2 = new Node(5, new DriveAction(LEFT_TURN,15)); // TODO: Check which direction it needs to turn; Check turn amount
     driveNode3 = new Node(5, new DriveAction(LEFT_TURN,15)); // TODO: Check which direction it needs to turn; Check turn amount
     driveNode4 = new Node(5, new DriveAction(BACKWARD));
@@ -21,7 +22,8 @@ void ThreeBallRoutine::AddNodes() {
     launcherNode3 = new Node(5, new LauncherAction(LAUNCHER_FORWARD));
     
     AddFirstNode(driveNode1);
-    driveNode1->AddNext(intakeNode1);
+    driveNode1->AddNext(extendNode);
+    extendNode->AddNext(intakeNode1);
     intakeNode1->AddNext(delayNode1);
     delayNode1->AddNext(conveyorNode1);
     conveyorNode1->AddNext(delayNode2);

@@ -33,4 +33,5 @@ class ThreeBallRoutine : public COREAuton {
     Node * delayNode4;      // Delay to launch all balls
     Node * intakeNode2;     // Turns intake off
     Node * conveyorNode2;   // Turns conveyor off
+    Node * extendNode;      // Extend the Intake
 };
