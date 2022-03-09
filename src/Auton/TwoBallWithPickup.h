@@ -18,7 +18,7 @@ class TwoBallWithPickup : public COREAuton {
     void AddNodes() override;
     private:
     Node * driveNode1;      // Drive Backwards
-    Node * extendNode;
+    Node * extendNode;      // Extend the intake
     Node * intakeNode1;     // Intakes in
     Node * delayNode1;      // Delay before turning on Robot to reach ball
     Node * conveyorNode1;   // Conveyor on to make space for second ball
