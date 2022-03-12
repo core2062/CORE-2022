@@ -2,12 +2,11 @@
 
 using namespace CORE;
 
-LauncherSubsystem::LauncherSubsystem() :forwardSpeed("Launcher Forward Speed", 0.6),
-                                        backwardSpeed("Launcher Backward Speed", -0.2),m_rightFeed(RIGHT_FEED),
+LauncherSubsystem::LauncherSubsystem() :m_rightFeed(RIGHT_FEED),
                                         m_leftFeed(LEFT_FEED),
                                         m_rightLauncher(RIGHT_LAUNCHER),
                                         m_leftLauncher(LEFT_LAUNCHER),
-                                        forwardSpeed("Launcher Forward Speed", 0.6),
+                                        forwardSpeed("Launcher Forward Speed", 0.2),
                                         m_launcherSolenoid(frc::PneumaticsModuleType::REVPH,LAUNCHER_SOLENOID_IN_PORT,LAUNCHER_SOLENOID_OUT_PORT),
                                         backwardSpeed("Launcher Backward Speed", -0.2)  {
                                         
@@ -48,9 +47,12 @@ void LauncherSubsystem::setLauncherSpeed(double launcherSpeed) {
         m_rightLauncher.Set(ControlMode::PercentOutput, launcherSpeed);
 }
 void LauncherSubsystem::ExtendLauncher(bool launcherRetracted){
-    if(launcherRetracted == 1){
+    CORELog::LogInfo("toggling launcher");
+    if(launcherRetracted){
         m_launcherSolenoid.Set(DoubleSolenoid::Value::kForward);
-    } else if(launcherRetracted == 0){
+        CORELog::LogInfo("unPunched");
+    } else{
         m_launcherSolenoid.Set(DoubleSolenoid::Value::kReverse);
+        CORELog::LogInfo("punched");
     }
 }

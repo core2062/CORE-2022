@@ -11,6 +11,8 @@
 #include "ConveyorSubsystem.h"
 #include "LauncherSubsystem.h"
 #include "ClimberSubsystem.h"
+#include "OneBallRoutine.h"
+#include "DriveRoutine.h"
 #include "Config.h"
 
 // #include "Auton/TestRoutine.h"
@@ -33,7 +35,8 @@ class Robot : public CORERobot {
         ConveyorSubsystem conveyorSubsystem;
         LauncherSubsystem launcherSubsystem;
         // ClimberSubsystem climberSubsystem;
-        // DriveRoutine driveRoutine;
+        DriveRoutine driveRoutine;
+        OneBallRoutine oneBallRoutine;
     private:
         static Robot * m_instance;
 };

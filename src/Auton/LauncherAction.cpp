@@ -21,6 +21,12 @@ CORE::COREAutonAction::actionStatus LauncherAction::Action() {
         case LAUNCHER_OFF:
             Robot::GetInstance()->launcherSubsystem.setLauncherSpeed(0);
             break;
+        case LAUNCHER_PUNCH_IN:
+             Robot::GetInstance()->launcherSubsystem.ExtendLauncher(false);
+             break;
+        case LAUNCHER_PUNCH_OUT:
+            Robot::GetInstance()->launcherSubsystem.ExtendLauncher(true);
+            break;
     }
     return COREAutonAction::actionStatus::END;
 } 

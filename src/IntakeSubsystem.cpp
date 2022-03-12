@@ -5,7 +5,7 @@ using namespace CORE;
 IntakeSubsystem::IntakeSubsystem() :
                                     m_intakeMotor(INTAKE_PORT),
                                     m_intakeSolenoid(frc::PneumaticsModuleType::REVPH,INTAKE_SOLENOID_IN_PORT,INTAKE_SOLENOID_OUT_PORT),
-                                    intakeSpeed("Intake Speed", 0.20) {
+                                    intakeSpeed("Intake Speed", 0.50) {
 
 }
 

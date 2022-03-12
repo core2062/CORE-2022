@@ -8,7 +8,9 @@ using namespace CORE;
 enum launcherAction {
     LAUNCHER_FORWARD,
     LAUNCHER_REVERSE,
-    LAUNCHER_OFF
+    LAUNCHER_OFF,
+    LAUNCHER_PUNCH_OUT,
+    LAUNCHER_PUNCH_IN
 };
 
 class LauncherAction : public COREAutonAction {

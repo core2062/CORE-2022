@@ -2,13 +2,13 @@
 #include "Robot.h"
 
 DriveAction::DriveAction(driveAction requestedDriveAction) : 
-                                        m_distAutonMoveEncoderTicks("Auton Movement", 6000) {
+                                        m_distAutonMoveEncoderTicks("Auton Movement", 12000) {
                                         m_driveAction = requestedDriveAction;
                                         m_turnAmount = 0;
 }
 
 DriveAction::DriveAction(driveAction requestedDriveAction, double turnAmount) : 
-                                        m_distAutonMoveEncoderTicks("Auton Movement", 6000) {
+                                        m_distAutonMoveEncoderTicks("Auton Movement", 12000) {
                                         m_driveAction = requestedDriveAction;
                                         m_turnAmount = turnAmount;
 
@@ -26,9 +26,9 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
     double encoderValue = driveSubsystem->getRobotPosition();
     switch(m_driveAction) {
         case FORWARD:
-            Robot::GetInstance()->driveSubsystem.setMotorSpeed(0.5, DriveSide::BOTH);
+            Robot::GetInstance()->driveSubsystem.setMotorSpeed(0.3, DriveSide::BOTH);
             if(encoderValue < m_distAutonMoveEncoderTicks.Get() + m_encoderStartUpPosition){
-                driveSubsystem->setMotorSpeed(0.5, DriveSide::BOTH);
+                driveSubsystem->setMotorSpeed(0.3, DriveSide::BOTH);
                 return COREAutonAction::actionStatus::CONTINUE;
             } else{
                 driveSubsystem->setMotorSpeed(0.0, DriveSide::BOTH);
@@ -36,7 +36,7 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
             break;
         case BACKWARD:
             if(encoderValue > m_encoderStartUpPosition - m_distAutonMoveEncoderTicks.Get()){
-                driveSubsystem->setMotorSpeed(-0.5, DriveSide::BOTH);
+                driveSubsystem->setMotorSpeed(-0.3, DriveSide::BOTH);
                 return COREAutonAction::actionStatus::CONTINUE;
             } else{
                 driveSubsystem->setMotorSpeed(0.0, DriveSide::BOTH);
