@@ -7,6 +7,7 @@ LauncherSubsystem::LauncherSubsystem() :m_rightFeed(RIGHT_FEED),
                                         m_rightLauncher(RIGHT_LAUNCHER),
                                         m_leftLauncher(LEFT_LAUNCHER),
                                         forwardSpeed("Launcher Forward Speed", 0.6),
+                                        m_launcherSolenoid(frc::PneumaticsModuleType::REVPH,LAUNCHER_SOLENOID_IN_PORT,LAUNCHER_SOLENOID_OUT_PORT),
                                         backwardSpeed("Launcher Backward Speed", -0.2)  {
                                         
 }
@@ -14,6 +15,7 @@ LauncherSubsystem::LauncherSubsystem() :m_rightFeed(RIGHT_FEED),
 void LauncherSubsystem::robotInit(){
     operatorJoystick->RegisterButton(CORE::COREJoystick::LEFT_BUTTON);
     operatorJoystick->RegisterButton(CORE::COREJoystick::LEFT_TRIGGER);
+    operatorJoystick->RegisterButton(CORE::COREJoystick::B_BUTTON);
     m_leftFeed.Set(ControlMode::PercentOutput, 0);
     m_rightFeed.Set(ControlMode::PercentOutput, 0);
     m_leftLauncher.Set(ControlMode::PercentOutput, 0);
@@ -32,11 +34,22 @@ void LauncherSubsystem::teleop() {
     } else {
         setLauncherSpeed(0);
     }
+    if(operatorJoystick->GetRisingEdge(CORE::COREJoystick::JoystickButton::B_BUTTON)){
+        ExtendLauncher(m_launcherRetracted);
+        m_launcherRetracted = !m_launcherRetracted;
+    }
 }
 
 void LauncherSubsystem::setLauncherSpeed(double launcherSpeed) {
         m_leftFeed.Set(ControlMode::PercentOutput, launcherSpeed);
         m_rightFeed.Set(ControlMode::PercentOutput, -launcherSpeed);
-        m_leftLauncher.Set(ControlMode::PercentOutput, launcherSpeed);
-        m_rightLauncher.Set(ControlMode::PercentOutput, -launcherSpeed);
+        m_leftLauncher.Set(ControlMode::PercentOutput, -launcherSpeed);
+        m_rightLauncher.Set(ControlMode::PercentOutput, launcherSpeed);
+}
+void LauncherSubsystem::ExtendLauncher(bool launcherRetracted){
+    if(launcherRetracted == 1){
+        m_launcherSolenoid.Set(DoubleSolenoid::Value::kForward);
+    } else if(launcherRetracted == 0){
+        m_launcherSolenoid.Set(DoubleSolenoid::Value::kReverse);
+    }
 }
