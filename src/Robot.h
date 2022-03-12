@@ -12,6 +12,9 @@
 #include "LauncherSubsystem.h"
 #include "ClimberSubsystem.h"
 #include "OneBallRoutine.h"
+#include "TwoBallRoutine.h"
+#include "TwoBallWithPickup.h"
+#include "ThreeBallRoutine.h"
 #include "DriveRoutine.h"
 #include "Config.h"
 
@@ -37,6 +40,9 @@ class Robot : public CORERobot {
         // ClimberSubsystem climberSubsystem;
         DriveRoutine driveRoutine;
         OneBallRoutine oneBallRoutine;
+        TwoBallRoutine twoBallRoutine;
+        TwoBallWithPickup twoBallWithPickup;
+        ThreeBallRoutine threeBallRoutine;
     private:
         static Robot * m_instance;
 };
