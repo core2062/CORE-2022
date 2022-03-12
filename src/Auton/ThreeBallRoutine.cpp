@@ -21,6 +21,9 @@ void ThreeBallRoutine::AddNodes() {
     launcherNode1 = new Node(5, new LauncherAction(LAUNCHER_FORWARD));
     launcherNode2 = new Node(5, new LauncherAction(LAUNCHER_OFF));
     launcherNode3 = new Node(5, new LauncherAction(LAUNCHER_FORWARD));
+    launcherNode4 = new Node(5, new LauncherAction(LAUNCHER_OFF));
+    launcherNode5 = new Node(5, new LauncherAction(LAUNCHER_FORWARD));
+    launcherNode6 = new Node(5, new LauncherAction(LAUNCHER_OFF));
     launcherPunchInNode1 = new Node(5, new LauncherAction(LAUNCHER_PUNCH_IN));
     launcherPunchInNode2 = new Node(5, new LauncherAction(LAUNCHER_PUNCH_IN));
     launcherPunchInNode3 = new Node(5, new LauncherAction(LAUNCHER_PUNCH_IN));
@@ -39,17 +42,20 @@ void ThreeBallRoutine::AddNodes() {
     launcherPunchInNode1->AddNext(launcherNode1);
     launcherNode1->AddNext(delayNode3);
     delayNode3->AddNext(launcherPunchOutNode1);
-    launcherPunchOutNode1->AddNext(launcherPunchInNode2);
-    launcherPunchInNode2->AddNext(launcherNode2);
-    launcherNode2->AddNext(delayNode4);
+    launcherPunchOutNode1->AddNext(launcherNode2);
+    launcherNode2->AddNext(launcherPunchInNode2);
+    launcherPunchInNode2->AddNext(launcherNode3);
+    launcherNode3->AddNext(delayNode4);
     delayNode4->AddNext(launcherPunchOutNode2);
-    launcherPunchOutNode2->AddNext(driveNode3);
+    launcherPunchOutNode2->AddNext(launcherNode4);
+    launcherNode4->AddNext(driveNode3);
     driveNode3->AddNext(driveNode4);
     driveNode4->AddNext(driveNode5);
     driveNode5->AddNext(launcherPunchInNode3);
-    launcherPunchInNode3->AddNext(launcherNode3);
-    launcherNode3->AddNext(delayNode4);
+    launcherPunchInNode3->AddNext(launcherNode5);
+    launcherNode5->AddNext(delayNode4);
     delayNode5->AddNext(launcherPunchOutNode3);
-    launcherPunchOutNode3->AddNext(intakeNode2);
+    launcherPunchOutNode3->AddNext(launcherNode6);
+    launcherNode6->AddNext(intakeNode2);
     intakeNode2->AddNext(conveyorNode2);
 }
