@@ -16,13 +16,21 @@ class LauncherSubsystem : public CORESubsystem {
         void robotInit() override;
         void teleopInit() override;
         void teleop() override;
+        void toggleLauncher();
         void setLauncherSpeed(double launcherSpeed);
-        void ExtendLauncher(bool launcherRetracted);
-        COREConstant<double> forwardSpeed, backwardSpeed;
+        void setFeedSpeed(double feedSpeed);
+        void extendLauncher(bool launcherRetracted);
+        void launchCargo();
+        COREConstant<double> launcherForwardSpeed, launcherLowSpeed, launcherBackwardSpeed, launcherDelayTime;
 
     private:
         TalonSRX m_rightFeed, m_leftFeed;
         TalonFX m_rightLauncher, m_leftLauncher;
         DoubleSolenoid m_launcherSolenoid;
-        bool m_launcherRetracted;
+        CORETimer m_delayTimer;
+        double m_launcherSpeed;
+        bool m_launcherRetracted,m_launcherToggled,m_launching,m_launcherDelaying;
+	
+        void StartTimer();
+	    double GetTime();
 };
