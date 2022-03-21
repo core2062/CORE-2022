@@ -75,7 +75,7 @@ void DriveSubsystem::setMotorSpeed(double leftPercent, double rightPercent) {
 }
 
 double DriveSubsystem::getRobotPosition(){
-	return m_leftMaster.GetSelectedSensorPosition();
+	return m_rightMaster.GetSelectedSensorPosition();
 }
 
 void DriveSubsystem::initTalons() {
@@ -117,4 +117,9 @@ void DriveSubsystem::toggleGear() {
 		m_rightDriveShifter.Set(DoubleSolenoid::Value::kReverse);
 		m_highGear = true;
 	}
+}
+
+void DriveSubsystem::resetEncoder(){
+	int error = m_rightMaster.SetSelectedSensorPosition(0.0);
+	cout << "error value is: " << error << endl;
 }
