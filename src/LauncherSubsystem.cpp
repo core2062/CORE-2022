@@ -2,10 +2,10 @@
 
 using namespace CORE;
 
-LauncherSubsystem::LauncherSubsystem() :    launcherForwardSpeed("Launcher Forward Speed", 0.6),
+LauncherSubsystem::LauncherSubsystem() :    launcherForwardSpeed("Launcher Forward Speed", -0.2),
                                             launcherLowSpeed("Launcher Low Speed", 0.25),
-                                            launcherBackwardSpeed("Launcher Backward Speed", -0.2),
-                                            launcherDelayTime("Launcher Delay",0.25),
+                                            launcherBackwardSpeed("Launcher Backward Speed", 0.2),
+                                            launcherDelayTime("Launcher Delay",2.5),
                                             m_rightFeed(RIGHT_FEED),
                                             m_leftFeed(LEFT_FEED),
                                             m_rightLauncher(RIGHT_LAUNCHER),
@@ -65,28 +65,25 @@ void LauncherSubsystem::setFeedSpeed(double feedSpeed) {
 
 void LauncherSubsystem::extendLauncher(bool launcherRetracted){
     if(launcherRetracted){
-        m_launcherSolenoid.Set(DoubleSolenoid::Value::kForward);
-    } else {
         m_launcherSolenoid.Set(DoubleSolenoid::Value::kReverse);
+    } else {
+        m_launcherSolenoid.Set(DoubleSolenoid::Value::kForward);
     }
     m_launcherRetracted = !m_launcherRetracted;
 }
 
 void LauncherSubsystem::launchCargo(){
     if (!m_launcherDelaying && m_launching) {
-        if (!m_launcherToggled) {
-            toggleLauncher();
-            setFeedSpeed(launcherForwardSpeed.Get());
+            setFeedSpeed(launcherLowSpeed.Get());
             StartTimer();
+            extendLauncher(true);
             m_launcherDelaying = true;
-        }
     } else if (m_launcherDelaying) {
         if (GetTime() >= launcherDelayTime.Get()) {
-            if (m_launcherToggled) {
-                toggleLauncher();
                 setFeedSpeed(0);
+                extendLauncher(false);
                 m_launcherDelaying = false;
-            }
+                m_launching = !m_launching;
         }
     }
 }

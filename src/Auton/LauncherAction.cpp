@@ -6,8 +6,8 @@ LauncherAction::LauncherAction(launcherAction requestedLauncherAction) {
 }
 
 void LauncherAction::ActionInit() {
-    m_launcherForward = Robot::GetInstance()->launcherSubsystem.forwardSpeed.Get();
-    m_launcherBackward = Robot::GetInstance()->launcherSubsystem.backwardSpeed.Get();
+    m_launcherForward = Robot::GetInstance()->launcherSubsystem.launcherForwardSpeed.Get();
+    m_launcherBackward = Robot::GetInstance()->launcherSubsystem.launcherBackwardSpeed.Get();
 }
 
 CORE::COREAutonAction::actionStatus LauncherAction::Action() {
@@ -22,10 +22,10 @@ CORE::COREAutonAction::actionStatus LauncherAction::Action() {
             Robot::GetInstance()->launcherSubsystem.setLauncherSpeed(0);
             break;
         case LAUNCHER_PUNCH_IN:
-             Robot::GetInstance()->launcherSubsystem.ExtendLauncher(false);
+             Robot::GetInstance()->launcherSubsystem.extendLauncher(false);
              break;
         case LAUNCHER_PUNCH_OUT:
-            Robot::GetInstance()->launcherSubsystem.ExtendLauncher(true);
+            Robot::GetInstance()->launcherSubsystem.extendLauncher(true);
             break;
     }
     return COREAutonAction::actionStatus::END;
