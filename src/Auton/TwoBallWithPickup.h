@@ -32,4 +32,14 @@ class TwoBallWithPickup : public COREAuton {
     Node * delayNode4;      // Delay to launch all balls
     Node * intakeNode2;     // Turns intake off
     Node * conveyorNode2;   // Turns conveyor off
+    Node * launcherPunchNode1; // Pushes piston out
+    Node * launcherPunchNode2; // Pulls piston in
+    Node * delayNode5; 
+    Node * conveyorNode3;
+    Node * conveyorNode4;
+    Node * launcherPunchNode3; // Pushes piston out
+    Node * launcherPunchNode4; // Pulls piston in
+    Node * launcherNode3;   // Turning on launcher
+    Node * launcherNode4;   // Turns launcher off
+    Node * delayNode6;
 };
