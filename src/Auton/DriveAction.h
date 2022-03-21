@@ -23,4 +23,6 @@ private:
     driveAction m_driveAction;
     double m_encoderStartUpPosition, m_turnAmount, m_navXStartingHeading, m_requestedHeading;
     COREConstant<double> m_distAutonMoveEncoderTicks;
+    double m_encoderValue;
+    double m_currentHeading;
 };

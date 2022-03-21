@@ -6,7 +6,7 @@ LauncherSubsystem::LauncherSubsystem() :m_rightFeed(RIGHT_FEED),
                                         m_leftFeed(LEFT_FEED),
                                         m_rightLauncher(RIGHT_LAUNCHER),
                                         m_leftLauncher(LEFT_LAUNCHER),
-                                        forwardSpeed("Launcher Forward Speed", 0.2),
+                                        forwardSpeed("Launcher Forward Speed", 0.7),
                                         m_launcherSolenoid(frc::PneumaticsModuleType::REVPH,LAUNCHER_SOLENOID_IN_PORT,LAUNCHER_SOLENOID_OUT_PORT),
                                         backwardSpeed("Launcher Backward Speed", -0.2)  {
                                         

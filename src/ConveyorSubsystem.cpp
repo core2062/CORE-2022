@@ -4,7 +4,7 @@
 
 ConveyorSubsystem::ConveyorSubsystem() : m_conveyorMotor(CONVEYOR_PORT),
                                         conveyorForwardSpeed("Conveyor Forward Speed", -0.5),
-                                        conveyorReverseSpeed("Conveyor Reverse Speed", 0.1) {
+                                        conveyorReverseSpeed("Conveyor Reverse Speed", 0.5) {
 }
 
 void ConveyorSubsystem::robotInit(){
