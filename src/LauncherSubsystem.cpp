@@ -26,6 +26,9 @@ void LauncherSubsystem::robotInit(){
 
 void LauncherSubsystem::teleopInit() {
     // SmartDashboard::PutString("Launcher Controls", " Launcher Out: Left Trigger \n Launcher Reverse: Left Button");
+    m_launcherSolenoid.Set(DoubleSolenoid::Value::kForward);
+    m_leftLauncher.Set(ControlMode::PercentOutput, 0);
+    m_rightLauncher.Set(ControlMode::PercentOutput, 0);
 }
 
 void LauncherSubsystem::teleop() {

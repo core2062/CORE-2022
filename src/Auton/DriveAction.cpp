@@ -2,13 +2,13 @@
 #include "Robot.h"
 
 DriveAction::DriveAction(driveAction requestedDriveAction) : 
-                                        m_distAutonMoveEncoderTicks("Auton Movement", 48000) {
+                                        m_distAutonMoveEncoderTicks("Auton Movement", 60000) {
                                         m_driveAction = requestedDriveAction;
                                         m_turnAmount = 0;
 }
 
 DriveAction::DriveAction(driveAction requestedDriveAction, double turnAmount) : 
-                                        m_distAutonMoveEncoderTicks("Auton Movement", 48000) {
+                                        m_distAutonMoveEncoderTicks("Auton Movement", 60000) {
                                         m_driveAction = requestedDriveAction;
                                         m_turnAmount = turnAmount;
 
