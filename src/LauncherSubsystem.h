@@ -22,6 +22,7 @@ class LauncherSubsystem : public CORESubsystem {
         void extendLauncher(bool launcherRetracted);
         void launchCargo();
         COREConstant<double> launcherForwardSpeed, launcherLowSpeed, launcherBackwardSpeed, launcherDelayTime;
+        bool m_launching;
 
     private:
         TalonSRX m_rightFeed, m_leftFeed;
@@ -29,7 +30,7 @@ class LauncherSubsystem : public CORESubsystem {
         DoubleSolenoid m_launcherSolenoid;
         CORETimer m_delayTimer;
         double m_launcherSpeed;
-        bool m_launcherRetracted,m_launcherToggled,m_launching,m_launcherDelaying;
+        bool m_launcherRetracted,m_launcherToggled,m_launcherDelaying;
 	
         void StartTimer();
 	    double GetTime();
