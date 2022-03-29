@@ -5,6 +5,13 @@ DriveAction::DriveAction(driveAction requestedDriveAction) :
                                         m_distAutonMoveEncoderTicks("Auton Movement", 75000) {
                                         m_driveAction = requestedDriveAction;
                                         m_turnAmount = 0;
+                                        m_requestedDistance = m_distAutonMoveEncoderTicks.Get();
+}
+DriveAction::DriveAction(driveAction requestedDriveAction, int requestedEncoderDistance) :
+                                         m_distAutonMoveEncoderTicks("Auton Movement", 75000) {
+                                         m_driveAction = requestedDriveAction;
+                                         m_turnAmount = 0;
+                                         m_requestedDistance = requestedEncoderDistance;
 }
 
 DriveAction::DriveAction(driveAction requestedDriveAction, double turnAmount) : 
@@ -28,7 +35,7 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
     switch(m_driveAction) {
         case FORWARD:
             Robot::GetInstance()->driveSubsystem.setMotorSpeed(0.3, DriveSide::BOTH);
-            if(m_encoderValue < m_distAutonMoveEncoderTicks.Get() + m_encoderStartUpPosition){
+            if(m_encoderValue < m_requestedDistance + m_encoderStartUpPosition){
                 driveSubsystem->setMotorSpeed(0.3, DriveSide::BOTH);
                 return COREAutonAction::actionStatus::CONTINUE;
             } else{
@@ -36,11 +43,11 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
             }
             break;
         case BACKWARD:
-            if(m_encoderValue > m_encoderStartUpPosition - m_distAutonMoveEncoderTicks.Get()){
+            if(m_encoderValue > m_encoderStartUpPosition - m_requestedDistance){
                 driveSubsystem->setMotorSpeed(-0.3, DriveSide::BOTH);
                 cout << "Encoder Value: "    << m_encoderValue << endl
                      << "Start position: "   << m_encoderStartUpPosition << endl 
-                     << "Movement setting: " << m_distAutonMoveEncoderTicks.Get() << endl;
+                     << "Movement setting: " << m_requestedDistance << endl;
                 return COREAutonAction::actionStatus::CONTINUE;
             } else{
                 cout << "Stopping back up" << endl;

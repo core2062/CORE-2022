@@ -16,7 +16,9 @@ public:
     void AddNodes() override;
 private:
     Node * delayNode;
+    Node * delayNode2;
     Node * launcherPunchNode;
     Node * launcherOnNode;
     Node * driveNode;
+    Node * driveNode2;
 };

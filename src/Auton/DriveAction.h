@@ -15,6 +15,7 @@ enum driveAction {
 class DriveAction : public COREAutonAction {
 public:
     DriveAction(driveAction requestedDriveAction); // Use for FORWARD and BACKWARD actions
+    DriveAction(driveAction requestedDriveAction, int requestedDistance); // Use for FORWARD and BACKWARD actions
     DriveAction(driveAction requestedDriveAction, double turnAmount); // Use for TURN_RIGHT and TURN_LEFT actions
     void ActionInit() override;
     CORE::COREAutonAction::actionStatus Action() override;
@@ -25,4 +26,5 @@ private:
     COREConstant<double> m_distAutonMoveEncoderTicks;
     double m_encoderValue;
     double m_currentHeading;
+    double m_requestedDistance;
 };
