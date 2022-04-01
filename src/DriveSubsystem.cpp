@@ -27,6 +27,7 @@ void DriveSubsystem::robotInit() {
 
 void DriveSubsystem::teleopInit() {
 	// Sets ether drive values, inits talons
+	setTalonMode(NeutralMode::Coast);
 	COREEtherDrive::SetAB(m_etherAValue.Get(), m_etherBValue.Get());
 	COREEtherDrive::SetQuickturn(m_etherQuickTurnValue.Get());
 	initTalons();
@@ -75,7 +76,7 @@ void DriveSubsystem::setMotorSpeed(double leftPercent, double rightPercent) {
 }
 
 double DriveSubsystem::getRobotPosition(){
-	return m_rightMaster.GetSelectedSensorPosition();
+	return m_leftMaster.GetSelectedSensorPosition();
 }
 
 void DriveSubsystem::initTalons() {
@@ -119,7 +120,9 @@ void DriveSubsystem::toggleGear() {
 	}
 }
 
-void DriveSubsystem::resetEncoder(){
-	int error = m_rightMaster.SetSelectedSensorPosition(0.0);
-	cout << "error value is: " << error << endl;
+void DriveSubsystem::setTalonMode(NeutralMode mode){
+	m_leftMaster.SetNeutralMode(mode);
+	m_leftSlave.SetNeutralMode(mode);
+	m_rightMaster.SetNeutralMode(mode);
+	m_rightSlave.SetNeutralMode(mode);
 }

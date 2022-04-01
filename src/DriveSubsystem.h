@@ -28,7 +28,9 @@ public:
 	void setMotorSpeed(double speedInFraction, DriveSide whichSide);
 	void setMotorSpeed(double leftPercent, double rightPercent);
 	void toggleGear();
-	void resetEncoder();
+
+	void setTalonMode(NeutralMode mode);
+
 	COREVector path;
 
 	AHRS ahrs;
