@@ -86,13 +86,16 @@ void DriveSubsystem::initTalons() {
 	m_rightSlave.Set(ControlMode::PercentOutput, 0);
 
 	// Encoder Functions
-    m_leftSlave.SetStatusFramePeriod(StatusFrameEnhanced::Status_1_General, 10, 0);
+    m_leftMaster.SetStatusFramePeriod(StatusFrameEnhanced::Status_1_General, 10, 0);
     m_rightMaster.SetStatusFramePeriod(StatusFrameEnhanced::Status_1_General, 10, 0);
 
-    m_leftSlave.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor, 0, 0);
+    m_leftMaster.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor, 0, 0);
     m_rightMaster.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor, 0, 0);
 
-	m_leftSlave.SetSensorPhase(false);
+	m_rightMaster.SetSelectedSensorPosition(0.0);
+	m_leftMaster.SetSelectedSensorPosition(0.0);
+	
+	m_leftMaster.SetSensorPhase(false);
     m_rightMaster.SetSensorPhase(false);
 
 	// Motor Inversion
@@ -102,12 +105,8 @@ void DriveSubsystem::initTalons() {
 	m_rightSlave.SetInverted(true);
 }
 
-void DriveSubsystem::teleopEnd() {
-	m_compressor.Disable();
-}
-
 void DriveSubsystem::toggleGear() {
-	// Shifts from high gear to low gear or vice versa
+	//Shifts from high gear to low gear or vice versa
 	if (m_highGear) {
 		m_leftDriveShifter.Set(DoubleSolenoid::Value::kForward);
 		m_rightDriveShifter.Set(DoubleSolenoid::Value::kForward);
@@ -120,6 +119,6 @@ void DriveSubsystem::toggleGear() {
 }
 
 void DriveSubsystem::resetEncoder(){
-	int error = m_rightMaster.SetSelectedSensorPosition(0.0);
-	cout << "error value is: " << error << endl;
+	m_rightMaster.SetSelectedSensorPosition(0.0);
+	m_leftMaster.SetSelectedSensorPosition(0.0);
 }
