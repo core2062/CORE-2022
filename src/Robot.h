@@ -40,7 +40,7 @@ class Robot : public CORERobot {
         ClimberSubsystem climberSubsystem;
         DriveRoutine driveRoutine;
         OneBallRoutine oneBallRoutine;
-        // TwoBallRoutine twoBallRoutine;
+        TwoBallRoutine twoBallRoutine;
         // TwoBallWithPickup twoBallWithPickup;
         // ThreeBallRoutine threeBallRoutine;
     private:

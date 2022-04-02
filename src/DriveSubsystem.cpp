@@ -1,7 +1,7 @@
 #include "DriveSubsystem.h"
 
 DriveSubsystem::DriveSubsystem() :
-		ahrs(SPI::Port::kMXP),
+		ahrs(SerialPort::kUSB1),
 		m_analogPressureInput(0),
 		m_analogSupplyVoltage(1),
 		m_leftMaster(LEFT_FRONT_PORT),

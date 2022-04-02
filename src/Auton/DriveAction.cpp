@@ -5,13 +5,20 @@ DriveAction::DriveAction(driveAction requestedDriveAction) :
                                         m_distAutonMoveEncoderTicks("Auton Movement", 24) {
                                         m_driveAction = requestedDriveAction;
                                         m_turnAmount = 0;
+                                        m_requestedDistance = m_distAutonMoveEncoderTicks.Get();
 }
 
-DriveAction::DriveAction(driveAction requestedDriveAction, double turnAmount) : 
-                                        m_distAutonMoveEncoderTicks("Auton Movement", 24) {
-                                        m_driveAction = requestedDriveAction;
-                                        m_turnAmount = turnAmount;
-
+DriveAction::DriveAction(driveAction requestedDriveAction, double passedDouble) : // Can be either move distance OR turn ammount
+                                         m_distAutonMoveEncoderTicks("Auton Movement", 24) {
+                                         m_driveAction = requestedDriveAction;
+                                        if (m_driveAction == driveAction::LEFT_TURN || m_driveAction == driveAction::RIGHT_TURN)
+                                        {
+                                            m_turnAmount = passedDouble;
+                                            m_requestedDistance = 0;
+                                        } else {
+                                            m_requestedDistance = passedDouble;
+                                            m_turnAmount = 0;
+                                        }
 }
 
 void DriveAction::ActionInit() {
@@ -21,7 +28,6 @@ void DriveAction::ActionInit() {
     std::cout << m_distAutonMoveEncoderTicks.Get() << " Dist CORE Constant" << endl;
     m_requestedDriveDistance = ((m_distAutonMoveEncoderTicks.Get()*33540)/(6*3.14159265358979323));
     m_encoderStartUpPosition =  driveSubsystem->getRobotPosition();
-    std::cout << m_encoderStartUpPosition << " right encoder at startup" << endl; // should be zero
     m_navXStartingHeading = driveSubsystem->ahrs.GetFusedHeading(); //Starting heading of NavX; Used for TURN_RIGHT and TURN_LEFT
 }
 
@@ -46,7 +52,6 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
                      << "Movement setting: " << m_requestedDriveDistance << endl;
                 return COREAutonAction::actionStatus::CONTINUE;
             } else{
-                cout << "Stopping back up" << endl;
                 driveSubsystem->setMotorSpeed(0.0, DriveSide::BOTH);
             }
             break;
@@ -55,6 +60,7 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
             if (m_requestedHeading >= 360) { // If Requested heading is not in a possible range of movement, subtracts 360 to loop it back between 0-359
                 m_requestedHeading -= 360;
             } 
+
             m_currentHeading = driveSubsystem->ahrs.GetFusedHeading();
             if(m_currentHeading < (m_requestedHeading-5) || m_currentHeading > (m_requestedHeading+5)){ // Deadband of 5°
                 driveSubsystem->setMotorSpeed(0.1, DriveSide::LEFT);
@@ -68,7 +74,8 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
             m_requestedHeading = m_navXStartingHeading - m_turnAmount; // Calculates the requested heading to turn to
             if (m_requestedHeading < 0) { // If Requested heading is not in a possible range of movement, adds 360 to loop it back between 0-359
                 m_requestedHeading += 360;
-            } 
+            }
+
             m_currentHeading = driveSubsystem->ahrs.GetFusedHeading();
             if(m_currentHeading < (m_requestedHeading-5) || m_currentHeading > (m_requestedHeading+5)){ // Deadband of 5°
                 driveSubsystem->setMotorSpeed(-0.3, DriveSide::LEFT);
@@ -84,6 +91,5 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
 
 void DriveAction::ActionEnd() {
     DriveSubsystem* driveSubsystem = &Robot::GetInstance()->driveSubsystem;
-    std::cout << driveSubsystem->getRobotPosition() << " left encoder at end" << endl; // should be zero
 
 }
