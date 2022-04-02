@@ -1,6 +1,7 @@
 #include "DriveSubsystem.h"
 
 DriveSubsystem::DriveSubsystem() :
+		ahrs(SerialPort::kUSB1),
 		m_leftMaster(LEFT_FRONT_PORT),
 		m_rightMaster(RIGHT_FRONT_PORT),
 		m_leftSlave(LEFT_BACK_PORT),
@@ -51,6 +52,9 @@ void DriveSubsystem::teleop() {
 
 	if(driverJoystick->GetRisingEdge(CORE::COREJoystick::JoystickButton::RIGHT_TRIGGER)) {
 		toggleGear();
+	}
+	if (driverJoystick->GetButton(CORE::COREJoystick::JoystickButton::A_BUTTON)){
+		visionTracking();
 	}
 }
 
@@ -114,5 +118,26 @@ void DriveSubsystem::toggleGear() {
 		m_leftDriveShifter.Set(DoubleSolenoid::Value::kReverse);
 		m_rightDriveShifter.Set(DoubleSolenoid::Value::kReverse);
 		m_highGear = true;
+	}
+}
+void DriveSubsystem::visionTracking() {
+    auto table = ntinst.GetTable("limelight");
+	m_turnAmount = table->GetNumber("tx", 0.0);
+    bool hasCenterX = table->GetNumber("tv", 0.0) == 1;
+	if (hasCenterX){
+   		 m_currentHeading = ahrs.GetFusedHeading();
+			m_requestedHeading = m_currentHeading + m_turnAmount; // Calculates the requested heading to turn to
+            while (m_requestedHeading >= 360) { // If Requested heading is not in a possible range of movement, subtracts 360 to loop it back between 0-359
+                m_requestedHeading -= 360;
+            } 
+            if(m_currentHeading < (m_requestedHeading-5) && (m_turnAmount > 0)){ // Deadband of 5°
+                setMotorSpeed(0.1, DriveSide::LEFT);
+                setMotorSpeed(-0.1, DriveSide::RIGHT);
+			} else if (m_currentHeading > (m_requestedHeading+5) && (m_turnAmount < 0)){
+				setMotorSpeed(0.1, DriveSide::LEFT);
+                setMotorSpeed(-0.1, DriveSide::RIGHT);
+			} else {
+				setMotorSpeed(0.0, DriveSide::BOTH);
+			}
 	}
 }
