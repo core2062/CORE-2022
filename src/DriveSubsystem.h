@@ -8,6 +8,7 @@
 #include <COREFramework/COREScheduler.h>
 #include <COREUtilities/CORETimer.h>
 #include "Config.h"
+#include <networktables/NetworkTableInstance.h>
 
 using namespace CORE;
 using namespace frc;
@@ -27,12 +28,15 @@ public:
 	void setMotorSpeed(double speedInFraction, DriveSide whichSide);
 	void setMotorSpeed(double leftPercent, double rightPercent);
 	void toggleGear();
+	double visionTracking();
 	COREVector path;
+	COREConstant<double> drivingSpeed;
 
 private:
     TalonFX m_leftMaster, m_rightMaster, m_leftSlave, m_rightSlave;
     COREConstant<double> m_etherAValue, m_etherBValue, m_etherQuickTurnValue, m_ticksPerInch;
     DoubleSolenoid m_leftDriveShifter, m_rightDriveShifter;
     bool m_highGear;
+    nt::NetworkTableInstance ntinst;
     Compressor m_compressor;
 };

@@ -11,7 +11,8 @@ DriveSubsystem::DriveSubsystem() :
         m_ticksPerInch("Ticks Per Inch", (4 * 3.1415) / 1024),
         m_leftDriveShifter(frc::PneumaticsModuleType::REVPH, LEFT_DRIVE_SHIFTER_HIGH_GEAR_PORT, LEFT_DRIVE_SHIFTER_LOW_GEAR_PORT),
         m_rightDriveShifter(frc::PneumaticsModuleType::REVPH, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
-		m_compressor(frc::PneumaticsModuleType::REVPH) {
+		m_compressor(frc::PneumaticsModuleType::REVPH),
+		drivingSpeed("Vision Driving Speed", 0.2) {
 }
 
 void DriveSubsystem::robotInit() {
@@ -19,6 +20,10 @@ void DriveSubsystem::robotInit() {
 	driverJoystick->RegisterAxis(CORE::COREJoystick::LEFT_STICK_Y);
 	driverJoystick->RegisterAxis(CORE::COREJoystick::RIGHT_STICK_X);
 	driverJoystick->RegisterButton(CORE::COREJoystick::RIGHT_TRIGGER);
+	driverJoystick->RegisterButton(CORE::COREJoystick::A_BUTTON);
+	
+    ntinst = nt::NetworkTableInstance::GetDefault();
+    ntinst.StartClientTeam(2062);
     initTalons();
 }
 
