@@ -28,7 +28,7 @@ class Robot : public CORERobot {
         IntakeSubsystem intakeSubsystem;
         ConveyorSubsystem conveyorSubsystem;
         LauncherSubsystem launcherSubsystem;
-        // ClimberSubsystem climberSubsystem;
+        ClimberSubsystem climberSubsystem;
     private:
         static Robot * m_instance;
 };

@@ -2,6 +2,7 @@
 
 #include <ctre/Phoenix.h>
 #include <frc/DoubleSolenoid.h>
+#include <frc/Compressor.h>
 #include <CORERobotLib.h>
 #include "Config.h"
 
@@ -15,6 +16,7 @@ public:
     void robotInit() override;
     void teleopInit() override;
     void teleop() override;
+    void climberSolenoid(bool climberPin);
 
     void climberMotor(double speed);
 
@@ -22,4 +24,7 @@ public:
 private:
     TalonFX m_rightTalon, m_leftTalon;
     COREConstant<double> m_climberOutSpeed,m_climberInSpeed,m_climberSoftStop;
+    DoubleSolenoid m_climberSolinoid;
+    bool m_climberPin;
+    Compressor m_climberCompressor;
 };
