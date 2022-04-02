@@ -1,6 +1,9 @@
 #include "DriveSubsystem.h"
 
 DriveSubsystem::DriveSubsystem() :
+		ahrs(SPI::Port::kMXP),
+		m_analogPressureInput(0),
+		m_analogSupplyVoltage(1),
 		m_leftMaster(LEFT_FRONT_PORT),
 		m_rightMaster(RIGHT_FRONT_PORT),
 		m_leftSlave(LEFT_BACK_PORT),
@@ -9,9 +12,9 @@ DriveSubsystem::DriveSubsystem() :
         m_etherBValue("Ether B Value", .4),
 		m_etherQuickTurnValue("Ether Quick Turn Value", 1.0),
         m_ticksPerInch("Ticks Per Inch", (4 * 3.1415) / 1024),
-        m_leftDriveShifter(LEFT_DRIVE_SHIFTER_PCM, frc::PneumaticsModuleType::REVPH, LEFT_DRIVE_SHIFTER_HIGH_GEAR_PORT, LEFT_DRIVE_SHIFTER_LOW_GEAR_PORT),
-        m_rightDriveShifter(RIGHT_DRIVE_SHIFTER_PCM, frc::PneumaticsModuleType::REVPH, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
-		m_compressor(COMPRESSOR_PCM,frc::PneumaticsModuleType::REVPH) {
+        // m_leftDriveShifter(frc::PneumaticsModuleType::REVPH, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
+        m_rightDriveShifter(frc::PneumaticsModuleType::REVPH, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
+		m_compressor(frc::PneumaticsModuleType::REVPH) {
 }
 
 void DriveSubsystem::robotInit() {
@@ -33,7 +36,7 @@ void DriveSubsystem::teleopInit() {
 
 void DriveSubsystem::teleop() {
 	// Code for teleop. Sets motor speed based on the values for the joystick, runs compressor,
-	// toggles gears
+	// Toggles gears
     double mag = -driverJoystick->GetAxis(CORE::COREJoystick::JoystickAxis::LEFT_STICK_Y);
 	double rot = driverJoystick->GetAxis(CORE::COREJoystick::JoystickAxis::RIGHT_STICK_X);
 
@@ -43,6 +46,10 @@ void DriveSubsystem::teleop() {
 	SmartDashboard::PutNumber("Right side speed", speeds.right);
 	SmartDashboard::PutNumber("Left side encoder", m_leftMaster.GetSelectedSensorPosition(0));
 	SmartDashboard::PutNumber("Right side encoder", m_rightMaster.GetSelectedSensorPosition(0));
+
+	SmartDashboard::PutNumber("Robot Heading", ahrs.GetFusedHeading());
+	
+	SmartDashboard::PutNumber("Pressure", (250* (m_analogPressureInput.GetVoltage()/m_analogSupplyVoltage.GetVoltage())-25));
 
 	if(driverJoystick->GetRisingEdge(CORE::COREJoystick::JoystickButton::RIGHT_TRIGGER)) {
 		toggleGear();
@@ -68,7 +75,7 @@ void DriveSubsystem::setMotorSpeed(double leftPercent, double rightPercent) {
 }
 
 double DriveSubsystem::getRobotPosition(){
-	return m_leftMaster.GetSelectedSensorPosition();
+	return m_rightMaster.GetSelectedSensorPosition();
 }
 
 void DriveSubsystem::initTalons() {
@@ -79,13 +86,16 @@ void DriveSubsystem::initTalons() {
 	m_rightSlave.Set(ControlMode::PercentOutput, 0);
 
 	// Encoder Functions
-    m_leftSlave.SetStatusFramePeriod(StatusFrameEnhanced::Status_1_General, 10, 0);
+    m_leftMaster.SetStatusFramePeriod(StatusFrameEnhanced::Status_1_General, 10, 0);
     m_rightMaster.SetStatusFramePeriod(StatusFrameEnhanced::Status_1_General, 10, 0);
 
-    m_leftSlave.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor, 0, 0);
+    m_leftMaster.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor, 0, 0);
     m_rightMaster.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor, 0, 0);
 
-	m_leftSlave.SetSensorPhase(false);
+	m_rightMaster.SetSelectedSensorPosition(0.0);
+	m_leftMaster.SetSelectedSensorPosition(0.0);
+	
+	m_leftMaster.SetSensorPhase(false);
     m_rightMaster.SetSensorPhase(false);
 
 	// Motor Inversion
@@ -95,19 +105,20 @@ void DriveSubsystem::initTalons() {
 	m_rightSlave.SetInverted(true);
 }
 
-void DriveSubsystem::teleopEnd() {
-	m_compressor.Disable();
-}
-
 void DriveSubsystem::toggleGear() {
-	// Shifts from high gear to low gear or vice versa
+	//Shifts from high gear to low gear or vice versa
 	if (m_highGear) {
-		m_leftDriveShifter.Set(DoubleSolenoid::Value::kForward);
+		// m_leftDriveShifter.Set(DoubleSolenoid::Value::kForward);
 		m_rightDriveShifter.Set(DoubleSolenoid::Value::kForward);
 		m_highGear = false;
 	} else {
-		m_leftDriveShifter.Set(DoubleSolenoid::Value::kReverse);
+		// m_leftDriveShifter.Set(DoubleSolenoid::Value::kReverse);
 		m_rightDriveShifter.Set(DoubleSolenoid::Value::kReverse);
 		m_highGear = true;
 	}
+}
+
+void DriveSubsystem::resetEncoder(){
+	m_rightMaster.SetSelectedSensorPosition(0.0);
+	m_leftMaster.SetSelectedSensorPosition(0.0);
 }

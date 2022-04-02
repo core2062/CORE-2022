@@ -6,8 +6,7 @@ ClimberSubsystem::ClimberSubsystem() :  m_rightTalon(RIGHT_CLIMBER_PORT),
 										m_climberOutSpeed("Climb Out Speed", 0.25),
 										m_climberInSpeed("Climb Reverse Speed", -0.1),
 										m_climberSoftStop("Climber Soft Stop", 100000),
-										m_climberSolinoid(CLIMBER_PCM, frc::PneumaticsModuleType::REVPH, IN_CLIMBER_PIN_PORT, OUT_CLIMBER_PIN_PORT),
-										m_climberCompressor(CLIMBER_PCM,frc::PneumaticsModuleType::REVPH) {
+										m_climberSolinoid(frc::PneumaticsModuleType::REVPH, RIGHT_CLIMBER_LOW_PORT, RIGHT_CLIMBER_HIGH_PORT){
 }
 
 void ClimberSubsystem::robotInit(){

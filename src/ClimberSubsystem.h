@@ -26,5 +26,4 @@ private:
     COREConstant<double> m_climberOutSpeed,m_climberInSpeed,m_climberSoftStop;
     DoubleSolenoid m_climberSolinoid;
     bool m_climberPin;
-    Compressor m_climberCompressor;
 };
