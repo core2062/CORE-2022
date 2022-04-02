@@ -16,11 +16,17 @@ public:
     TwoBallRoutine();
     void AddNodes() override;
 private:
+    Node * driveNode1;
+    Node * launcherNode;
+    Node * punchNode1;
     Node * delayNode;
-    Node * extendNode;
-    Node * launcherOnNode;
-    Node * conveyorOnNode;
+    Node * intakeOutNode;
     Node * intakeOnNode;
-    Node * driveNode;
+    Node * conveyorNode;
     Node * driveNode2;
+    Node * intakeOffNode;
+    Node * intakeInNode;
+    Node * driveNode3;
+    Node * punchNode2;
+    Node * driveNode4;
 };
