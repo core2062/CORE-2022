@@ -3,25 +3,22 @@
 // using namespace CORE;
 
 ClimberSubsystem::ClimberSubsystem() :  m_rightTalon(RIGHT_CLIMBER_PORT),
-										m_leftTalon(LEFT_CLIMBER_PORT),
 										m_climberOutSpeed("Climb Out Speed", 0.25),
 										m_climberInSpeed("Climb Reverse Speed", -0.1),
 										m_climberSoftStop("Climber Soft Stop", 100000),
-										m_climberSolinoid(CLIMBER_PCM, frc::PneumaticsModuleType::CTREPCM, IN_CLIMBER_PIN_PORT, OUT_CLIMBER_PIN_PORT),
-										m_climberCompressor(CLIMBER_PCM,frc::PneumaticsModuleType::CTREPCM) {
+										m_climberSolinoid(CLIMBER_PCM, frc::PneumaticsModuleType::REVPH, IN_CLIMBER_PIN_PORT, OUT_CLIMBER_PIN_PORT),
+										m_climberCompressor(CLIMBER_PCM,frc::PneumaticsModuleType::REVPH) {
 }
 
 void ClimberSubsystem::robotInit(){
 	driverJoystick->RegisterButton(CORE::COREJoystick::DPAD_N);
 	driverJoystick->RegisterButton(CORE::COREJoystick::DPAD_S);
 	driverJoystick->RegisterButton(CORE::COREJoystick::Y_BUTTON);
-	m_rightTalon.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor, 0, 0);
 
 }
 
 void ClimberSubsystem::teleopInit() {
 	m_rightTalon.SetNeutralMode(NeutralMode::Brake);
-	m_leftTalon.SetNeutralMode(NeutralMode::Brake);
 }
 
 void ClimberSubsystem::teleop(){
@@ -39,7 +36,6 @@ void ClimberSubsystem::teleop(){
 
 void ClimberSubsystem::climberMotor(double speed) {
 	m_rightTalon.Set(ControlMode::PercentOutput, speed);
-	m_leftTalon.Set(ControlMode::PercentOutput, speed);
 }
 
 void ClimberSubsystem::climberSolenoid(bool climberPin) {

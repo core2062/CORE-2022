@@ -22,7 +22,7 @@ public:
 
 
 private:
-    TalonFX m_rightTalon, m_leftTalon;
+    TalonSRX m_rightTalon;
     COREConstant<double> m_climberOutSpeed,m_climberInSpeed,m_climberSoftStop;
     DoubleSolenoid m_climberSolinoid;
     bool m_climberPin;

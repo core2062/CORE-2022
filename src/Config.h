@@ -20,7 +20,6 @@
 
 /* Climber */
 #define RIGHT_CLIMBER_PORT 11
-#define LEFT_CLIMBER_PORT 12
 
 /* Solenoids */
 #define COMPRESSOR_PCM 2
