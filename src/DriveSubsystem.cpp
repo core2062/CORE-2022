@@ -12,7 +12,7 @@ DriveSubsystem::DriveSubsystem() :
         m_etherBValue("Ether B Value", .4),
 		m_etherQuickTurnValue("Ether Quick Turn Value", 1.0),
         m_ticksPerInch("Ticks Per Inch", (4 * 3.1415) / 1024),
-        m_leftDriveShifter(frc::PneumaticsModuleType::REVPH, LEFT_DRIVE_SHIFTER_HIGH_GEAR_PORT, LEFT_DRIVE_SHIFTER_LOW_GEAR_PORT),
+        // m_leftDriveShifter(frc::PneumaticsModuleType::REVPH, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
         m_rightDriveShifter(frc::PneumaticsModuleType::REVPH, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
 		m_compressor(frc::PneumaticsModuleType::REVPH) {
 }
@@ -108,11 +108,11 @@ void DriveSubsystem::initTalons() {
 void DriveSubsystem::toggleGear() {
 	//Shifts from high gear to low gear or vice versa
 	if (m_highGear) {
-		m_leftDriveShifter.Set(DoubleSolenoid::Value::kForward);
+		// m_leftDriveShifter.Set(DoubleSolenoid::Value::kForward);
 		m_rightDriveShifter.Set(DoubleSolenoid::Value::kForward);
 		m_highGear = false;
 	} else {
-		m_leftDriveShifter.Set(DoubleSolenoid::Value::kReverse);
+		// m_leftDriveShifter.Set(DoubleSolenoid::Value::kReverse);
 		m_rightDriveShifter.Set(DoubleSolenoid::Value::kReverse);
 		m_highGear = true;
 	}

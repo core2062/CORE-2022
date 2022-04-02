@@ -23,6 +23,6 @@ public:
 
 private:
     TalonFX m_rightTalon, m_leftTalon;
-    DoubleSolenoid m_rightSolenoid, m_leftSolenoid;
+    DoubleSolenoid m_rightSolenoid;//, m_leftSolenoid;
     bool m_solenoidClimberToggled;
 };

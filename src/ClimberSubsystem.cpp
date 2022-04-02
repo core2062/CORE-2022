@@ -5,7 +5,7 @@
 ClimberSubsystem::ClimberSubsystem() :  m_rightTalon(RIGHT_CLIMBER_PORT),
 										m_leftTalon(LEFT_CLIMBER_PORT),
 										m_rightSolenoid(frc::PneumaticsModuleType::REVPH, RIGHT_CLIMBER_HIGH_PORT, RIGHT_CLIMBER_LOW_PORT), 
-										m_leftSolenoid(frc::PneumaticsModuleType::REVPH, LEFT_CLIMBER_HIGH_PORT, LEFT_CLIMBER_LOW_PORT),
+										// m_leftSolenoid(frc::PneumaticsModuleType::REVPH, LEFT_CLIMBER_HIGH_PORT, LEFT_CLIMBER_LOW_PORT),
 										climberOutSpeed("Climb Out Speed", 0.25),
 										climberInSpeed("Climb Reverse Speed", -0.1) {
 }
@@ -45,10 +45,10 @@ void ClimberSubsystem::solenoidClimb(){
 	if (m_solenoidClimberToggled) {
 		m_solenoidClimberToggled = true;
 		m_rightSolenoid.Set(DoubleSolenoid::Value::kForward);
-		m_leftSolenoid.Set(DoubleSolenoid::Value::kForward);
+		// m_leftSolenoid.Set(DoubleSolenoid::Value::kForward);
 	} else {
 		m_solenoidClimberToggled = false;
 		m_rightSolenoid.Set(DoubleSolenoid::Value::kReverse);
-		m_leftSolenoid.Set(DoubleSolenoid::Value::kReverse);
+		// m_leftSolenoid.Set(DoubleSolenoid::Value::kReverse);
 	}
 }
