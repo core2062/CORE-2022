@@ -16,9 +16,9 @@ public:
     void robotInit() override;
     void teleopInit() override;
     void teleop() override;
-    void climberSolenoid(bool climberPin);
-
     void climberMotor(double speed);
+    void toggleClimberSolenoid();
+
 
 
 private:
