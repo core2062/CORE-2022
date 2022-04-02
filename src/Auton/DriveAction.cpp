@@ -17,7 +17,7 @@ DriveAction::DriveAction(driveAction requestedDriveAction, double turnAmount) :
 void DriveAction::ActionInit() {
     DriveSubsystem* driveSubsystem = &Robot::GetInstance()->driveSubsystem;
     driveSubsystem->initTalons();
-    driveSubsystem->setBrakeMode();
+    driveSubsystem->setTalonMode(NeutralMode::Brake);
     std::cout << m_distAutonMoveEncoderTicks.Get() << " Dist CORE Constant" << endl;
     m_requestedDriveDistance = ((m_distAutonMoveEncoderTicks.Get()*33540)/(6*3.14159265358979323));
     m_encoderStartUpPosition =  driveSubsystem->getRobotPosition();
@@ -56,7 +56,7 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
                 m_requestedHeading -= 360;
             } 
             m_currentHeading = driveSubsystem->ahrs.GetFusedHeading();
-            if(m_currentHeading != (m_requestedHeading-5) || m_currentHeading != (m_requestedHeading+5)){ // Deadband of 5°
+            if(m_currentHeading < (m_requestedHeading-5) || m_currentHeading > (m_requestedHeading+5)){ // Deadband of 5°
                 driveSubsystem->setMotorSpeed(0.1, DriveSide::LEFT);
                 driveSubsystem->setMotorSpeed(-0.1, DriveSide::RIGHT);
                 return COREAutonAction::actionStatus::CONTINUE;
@@ -70,7 +70,7 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
                 m_requestedHeading += 360;
             } 
             m_currentHeading = driveSubsystem->ahrs.GetFusedHeading();
-            if(m_currentHeading != (m_requestedHeading-5) || m_currentHeading != (m_requestedHeading+5)){ // Deadband of 5°
+            if(m_currentHeading < (m_requestedHeading-5) || m_currentHeading > (m_requestedHeading+5)){ // Deadband of 5°
                 driveSubsystem->setMotorSpeed(-0.3, DriveSide::LEFT);
                 driveSubsystem->setMotorSpeed(0.3, DriveSide::RIGHT);
                 return COREAutonAction::actionStatus::CONTINUE;

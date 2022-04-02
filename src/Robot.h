@@ -37,7 +37,7 @@ class Robot : public CORERobot {
         IntakeSubsystem intakeSubsystem;
         ConveyorSubsystem conveyorSubsystem;
         LauncherSubsystem launcherSubsystem;
-        // ClimberSubsystem climberSubsystem;
+        ClimberSubsystem climberSubsystem;
         DriveRoutine driveRoutine;
         OneBallRoutine oneBallRoutine;
         // TwoBallRoutine twoBallRoutine;
