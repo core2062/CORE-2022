@@ -26,5 +26,5 @@ private:
     COREConstant<double> m_distAutonMoveEncoderTicks;
     double m_encoderValue;
     double m_currentHeading;
-    double m_requestedDistance;
+    double m_requestedDriveDistance;
 };
