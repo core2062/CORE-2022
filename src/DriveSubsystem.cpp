@@ -122,3 +122,10 @@ void DriveSubsystem::resetEncoder(){
 	m_rightMaster.SetSelectedSensorPosition(0.0);
 	m_leftMaster.SetSelectedSensorPosition(0.0);
 }
+
+void DriveSubsystem::SetTalonMode(NeutralMode mode){
+	m_rightMaster.SetNeutralMode(mode);
+	m_rightSlave.SetNeutralMode(mode);
+	m_leftMaster.SetNeutralMode(mode);
+	m_leftSlave.SetNeutralMode(mode);
+}

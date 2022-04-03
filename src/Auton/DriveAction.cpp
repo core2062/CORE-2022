@@ -17,7 +17,7 @@ DriveAction::DriveAction(driveAction requestedDriveAction, double turnAmount) :
 void DriveAction::ActionInit() {
     DriveSubsystem* driveSubsystem = &Robot::GetInstance()->driveSubsystem;
     driveSubsystem->initTalons();
-    driveSubsystem->setBrakeMode();
+    driveSubsystem->SetTalonMode(NeutralMode::Brake);
     std::cout << m_distAutonMoveEncoderTicks.Get() << " Dist CORE Constant" << endl;
     m_requestedDriveDistance = ((m_distAutonMoveEncoderTicks.Get()*33540)/(6*3.14159265358979323));
     m_encoderStartUpPosition =  driveSubsystem->getRobotPosition();
