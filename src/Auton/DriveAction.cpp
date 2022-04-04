@@ -92,5 +92,4 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
 void DriveAction::ActionEnd() {
     DriveSubsystem* driveSubsystem = &Robot::GetInstance()->driveSubsystem;
     std::cout << driveSubsystem->getRobotPosition() << " left encoder at end" << endl; // should be zero
-
 }

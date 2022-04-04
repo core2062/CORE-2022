@@ -21,17 +21,22 @@ class LauncherSubsystem : public CORESubsystem {
         void setFeedSpeed(double feedSpeed);
         void extendLauncher(bool launcherRetracted);
         void launchCargo();
-        COREConstant<double> launcherForwardSpeed, launcherLowSpeed, launcherBackwardSpeed, launcherDelayTime;
+        COREConstant<double> launcherForwardSpeed, launcherLowSpeed, launcherBackwardSpeed, launcherFeedDelayTime, launcherPunchDelayTime;
         bool m_launching;
 
     private:
         TalonSRX m_rightFeed, m_leftFeed;
         TalonFX m_rightLauncher, m_leftLauncher;
         DoubleSolenoid m_launcherSolenoid;
-        CORETimer m_delayTimer;
+        CORETimer m_punchDelayTimer, m_feedDelayTimer;
         double m_launcherSpeed;
         bool m_launcherRetracted,m_launcherToggled,m_launcherDelaying;
 	
-        void StartTimer();
-	    double GetTime();
+        void StartPunchTimer();
+        void ResetPunchTimer();
+	    double GetPunchTime();
+	
+        void StartFeedTimer();
+        void ResetFeedTimer();
+	    double GetFeedTime();
 };
