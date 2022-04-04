@@ -7,6 +7,13 @@ DriveAction::DriveAction(driveAction requestedDriveAction) :
                                         m_turnAmount = 0;
 }
 
+DriveAction::DriveAction(driveAction requestedDriveAction, int requestedEncoderDistance) :
+                                         m_distAutonMoveEncoderTicks("Auton Movement", 24) {
+                                         m_driveAction = requestedDriveAction;
+                                         m_turnAmount = 0;
+                                         m_requestedDriveDistance = requestedEncoderDistance;
+}
+
 DriveAction::DriveAction(driveAction requestedDriveAction, double turnAmount) : 
                                         m_distAutonMoveEncoderTicks("Auton Movement", 24) {
                                         m_driveAction = requestedDriveAction;
