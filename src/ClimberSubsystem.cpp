@@ -3,52 +3,46 @@
 // using namespace CORE;
 
 ClimberSubsystem::ClimberSubsystem() :  m_rightTalon(RIGHT_CLIMBER_PORT),
-										m_leftTalon(LEFT_CLIMBER_PORT),
-										m_rightSolenoid(frc::PneumaticsModuleType::REVPH, RIGHT_CLIMBER_HIGH_PORT, RIGHT_CLIMBER_LOW_PORT), 
-										m_leftSolenoid(frc::PneumaticsModuleType::REVPH, LEFT_CLIMBER_HIGH_PORT, LEFT_CLIMBER_LOW_PORT),
-										climberOutSpeed("Climb Out Speed", 0.25),
-										climberInSpeed("Climb Reverse Speed", -0.1) {
+										m_climberOutSpeed("Climb Out Speed", -0.25),
+										m_climberInSpeed("Climb Reverse Speed", 0.1),
+										m_climberSoftStop("Climber Soft Stop", 100000),
+										m_climberSolinoid(frc::PneumaticsModuleType::REVPH, RIGHT_CLIMBER_LOW_PORT, RIGHT_CLIMBER_HIGH_PORT){
 }
 
 void ClimberSubsystem::robotInit(){
-	driverJoystick->RegisterButton(CORE::COREJoystick::LEFT_BUTTON);
-	driverJoystick->RegisterButton(CORE::COREJoystick::LEFT_TRIGGER);
+	m_climberPin = false;
+	driverJoystick->RegisterButton(CORE::COREJoystick::DPAD_N);
+	driverJoystick->RegisterButton(CORE::COREJoystick::DPAD_S);
 	driverJoystick->RegisterButton(CORE::COREJoystick::Y_BUTTON);
 
-	m_solenoidClimberToggled = false;
 }
 
 void ClimberSubsystem::teleopInit() {
-	SmartDashboard::PutString("Climber Controls", " Talon Climb Up: Left Trigger,  Talon Climb Down: Left Button, Toggle Solenoids: Y Button");
+	m_rightTalon.SetNeutralMode(NeutralMode::Brake);
 }
 
 void ClimberSubsystem::teleop(){
-	if (driverJoystick->GetButton(CORE::COREJoystick::LEFT_TRIGGER)) {
-		talonClimb(climberOutSpeed.Get());
-	} else if(driverJoystick->GetButton(CORE::COREJoystick::LEFT_BUTTON)) {
-		talonClimb(climberInSpeed.Get());
-	} else {
-		talonClimb(0);
+	if (driverJoystick->GetRisingEdge(CORE::COREJoystick::Y_BUTTON)) { 
+		toggleClimberSolenoid(); 
 	}
-
-	if (driverJoystick->GetRisingEdge(CORE::COREJoystick::Y_BUTTON)) {
-		solenoidClimb();
+	if (driverJoystick->GetButton(CORE::COREJoystick::DPAD_N) /*&& m_rightTalon.GetSelectedSensorPosition() >= m_climberSoftStop.Get()*/) {
+		climberMotor(m_climberOutSpeed.Get());
+	} else if(driverJoystick->GetButton(CORE::COREJoystick::DPAD_S) /*&& m_rightTalon.GetSelectedSensorPosition() <= 0*/) {
+		climberMotor(m_climberInSpeed.Get());
+	} else {
+		climberMotor(0);
 	}
 }
 
-void ClimberSubsystem::talonClimb(double speed) {
+void ClimberSubsystem::climberMotor(double speed) {
 	m_rightTalon.Set(ControlMode::PercentOutput, speed);
-	m_leftTalon.Set(ControlMode::PercentOutput, speed);
 }
 
-void ClimberSubsystem::solenoidClimb(){
-	if (m_solenoidClimberToggled) {
-		m_solenoidClimberToggled = true;
-		m_rightSolenoid.Set(DoubleSolenoid::Value::kForward);
-		m_leftSolenoid.Set(DoubleSolenoid::Value::kForward);
+void ClimberSubsystem::toggleClimberSolenoid() {
+	if (m_climberPin){
+		m_climberSolinoid.Set(DoubleSolenoid::Value::kForward);
 	} else {
-		m_solenoidClimberToggled = false;
-		m_rightSolenoid.Set(DoubleSolenoid::Value::kReverse);
-		m_leftSolenoid.Set(DoubleSolenoid::Value::kReverse);
+		m_climberSolinoid.Set(DoubleSolenoid::Value::kReverse);
 	}
+	m_climberPin = !m_climberPin;
 }

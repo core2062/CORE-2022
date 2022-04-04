@@ -21,7 +21,6 @@ public:
 	void robotInit() override;
 	void teleopInit() override;
 	void teleop() override;
-	void teleopEnd() override;
 	
 	double getRobotPosition();
 	void initTalons();
@@ -29,16 +28,17 @@ public:
 	void setMotorSpeed(double leftPercent, double rightPercent);
 	void toggleGear();
 	void resetEncoder();
+	void SetTalonMode(NeutralMode mode);
 	COREVector path;
 
 	AHRS ahrs;
 
 private:
-	// m_analogSupplyVoltage used in calculation to get current PSI
+	//m_analogSupplyVoltage used in calculation to get current PSI
 	AnalogInput m_analogPressureInput, m_analogSupplyVoltage;
     bool m_highGear;
     TalonFX m_leftMaster, m_rightMaster, m_leftSlave, m_rightSlave;
     COREConstant<double> m_etherAValue, m_etherBValue, m_etherQuickTurnValue, m_ticksPerInch;
-    DoubleSolenoid m_leftDriveShifter, m_rightDriveShifter;
+    DoubleSolenoid m_rightDriveShifter;
     Compressor m_compressor;
 };
