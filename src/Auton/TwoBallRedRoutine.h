@@ -11,16 +11,23 @@
 using namespace CORE;
 using namespace std;
 
-class TwoBallRoutine: public COREAuton {
+class TwoBallRedRoutine: public COREAuton {
 public:
-    TwoBallRoutine();
+    TwoBallRedRoutine();
     void AddNodes() override;
 private:
     Node * delayNode;
+    Node * delayNode2;
+    Node * delayNode3;
+    Node * delayNode4;
+    Node * delayNode5;
     Node * extendNode;
     Node * launcherOnNode;
     Node * conveyorOnNode;
     Node * intakeOnNode;
     Node * driveNode;
     Node * driveNode2;
+    Node * launcherPunchNode;
+    Node * launcherPunchNode2;
+    Node * launcherPunchNode3;
 };

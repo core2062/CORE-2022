@@ -3,8 +3,8 @@
 // using namespace CORE;
 
 ClimberSubsystem::ClimberSubsystem() :  m_rightTalon(RIGHT_CLIMBER_PORT),
-										m_climberOutSpeed("Climb Out Speed", -0.25),
-										m_climberInSpeed("Climb Reverse Speed", 0.1),
+										m_climberOutSpeed("Climb Out Speed", -0.9),
+										m_climberInSpeed("Climb Reverse Speed", 0.9),
 										m_climberSoftStop("Climber Soft Stop", 100000),
 										m_climberSolinoid(frc::PneumaticsModuleType::REVPH, RIGHT_CLIMBER_LOW_PORT, RIGHT_CLIMBER_HIGH_PORT){
 }

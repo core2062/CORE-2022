@@ -2,20 +2,20 @@
 #include "Robot.h"
 
 DriveAction::DriveAction(driveAction requestedDriveAction) : 
-                                        m_distAutonMoveEncoderTicks("Auton Movement", 24) {
+                                        m_distAutonMoveEncoderTicks("Auton Movement", 24.0) {
                                         m_driveAction = requestedDriveAction;
                                         m_turnAmount = 0;
 }
 
 DriveAction::DriveAction(driveAction requestedDriveAction, int requestedEncoderDistance) :
-                                         m_distAutonMoveEncoderTicks("Auton Movement", 24) {
+                                         m_distAutonMoveEncoderTicks("Auton Movement", 24.0) {
                                          m_driveAction = requestedDriveAction;
                                          m_turnAmount = 0;
-                                         m_requestedDriveDistance = requestedEncoderDistance;
+                                         m_requestedDriveDistance = (requestedEncoderDistance *33540)/(6*3.14159265358979323);
 }
 
 DriveAction::DriveAction(driveAction requestedDriveAction, double turnAmount) : 
-                                        m_distAutonMoveEncoderTicks("Auton Movement", 24) {
+                                        m_distAutonMoveEncoderTicks("Auton Movement", 24.0) {
                                         m_driveAction = requestedDriveAction;
                                         m_turnAmount = turnAmount;
 
@@ -25,8 +25,10 @@ void DriveAction::ActionInit() {
     DriveSubsystem* driveSubsystem = &Robot::GetInstance()->driveSubsystem;
     driveSubsystem->initTalons();
     driveSubsystem->SetTalonMode(NeutralMode::Brake);
+    std::cout << "Resetting Encoder in ActionInit()" << endl;
+    driveSubsystem->resetEncoder();
     std::cout << m_distAutonMoveEncoderTicks.Get() << " Dist CORE Constant" << endl;
-    m_requestedDriveDistance = ((m_distAutonMoveEncoderTicks.Get()*33540)/(6*3.14159265358979323));
+    // m_requestedDriveDistance = ((m_distAutonMoveEncoderTicks.Get()*33540)/(6*3.14159265358979323));
     m_encoderStartUpPosition =  driveSubsystem->getRobotPosition();
     std::cout << m_encoderStartUpPosition << " right encoder at startup" << endl; // should be zero
     m_navXStartingHeading = driveSubsystem->ahrs.GetFusedHeading(); //Starting heading of NavX; Used for TURN_RIGHT and TURN_LEFT
@@ -42,6 +44,7 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
                 driveSubsystem->setMotorSpeed(0.3, DriveSide::BOTH);
                 return COREAutonAction::actionStatus::CONTINUE;
             } else{
+                cout << "Stopping forward" << endl;
                 driveSubsystem->setMotorSpeed(0.0, DriveSide::BOTH);
             }
             break;
