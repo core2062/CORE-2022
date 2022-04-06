@@ -5,6 +5,7 @@ DriveAction::DriveAction(driveAction requestedDriveAction) :
                                         m_distAutonMoveEncoderTicks("Auton Movement", 24.0) {
                                         m_driveAction = requestedDriveAction;
                                         m_turnAmount = 0;
+                                        m_requestedDriveDistance = (24 *33540)/(6*3.14159265358979323);
 }
 
 DriveAction::DriveAction(driveAction requestedDriveAction, int requestedEncoderDistance) :
@@ -30,6 +31,7 @@ void DriveAction::ActionInit() {
     std::cout << m_distAutonMoveEncoderTicks.Get() << " Dist CORE Constant" << endl;
     // m_requestedDriveDistance = ((m_distAutonMoveEncoderTicks.Get()*33540)/(6*3.14159265358979323));
     m_encoderStartUpPosition =  driveSubsystem->getRobotPosition();
+    std::cout << m_requestedDriveDistance << " Requested tick distance" << endl; // should be zero
     std::cout << m_encoderStartUpPosition << " right encoder at startup" << endl; // should be zero
     m_navXStartingHeading = driveSubsystem->ahrs.GetFusedHeading(); //Starting heading of NavX; Used for TURN_RIGHT and TURN_LEFT
 }
@@ -39,8 +41,7 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
     m_encoderValue = driveSubsystem->getRobotPosition();
     switch(m_driveAction) {
         case FORWARD:
-            Robot::GetInstance()->driveSubsystem.setMotorSpeed(0.3, DriveSide::BOTH);
-            if(m_encoderValue < m_requestedDriveDistance + m_encoderStartUpPosition){
+            if(m_encoderValue > m_encoderStartUpPosition - m_requestedDriveDistance){
                 driveSubsystem->setMotorSpeed(0.3, DriveSide::BOTH);
                 return COREAutonAction::actionStatus::CONTINUE;
             } else{
@@ -49,14 +50,14 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
             }
             break;
         case BACKWARD:
-            if(m_encoderValue > m_encoderStartUpPosition - m_requestedDriveDistance){
+            if(m_encoderValue < m_encoderStartUpPosition + m_requestedDriveDistance){
                 driveSubsystem->setMotorSpeed(-0.3, DriveSide::BOTH);
-                cout << "Encoder Value: "    << m_encoderValue << endl
-                     << "Start position: "   << m_encoderStartUpPosition << endl 
-                     << "Movement setting: " << m_requestedDriveDistance << endl;
+                // cout << "Encoder Value: "    << m_encoderValue << endl
+                //      << "Start position: "   << m_encoderStartUpPosition << endl 
+                //      << "Movement setting: " << m_requestedDriveDistance << endl;
                 return COREAutonAction::actionStatus::CONTINUE;
             } else{
-                cout << "Stopping back up" << endl;
+                cout << "Stopping backup" << endl;
                 driveSubsystem->setMotorSpeed(0.0, DriveSide::BOTH);
             }
             break;
@@ -94,5 +95,5 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
 
 void DriveAction::ActionEnd() {
     DriveSubsystem* driveSubsystem = &Robot::GetInstance()->driveSubsystem;
-    std::cout << driveSubsystem->getRobotPosition() << " left encoder at end" << endl; // should be zero
+    std::cout << driveSubsystem->getRobotPosition() << " Right encoder at end" << endl; // should be zero
 }

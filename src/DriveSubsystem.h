@@ -4,6 +4,7 @@
 #include <frc/DoubleSolenoid.h>
 #include <frc/AnalogInput.h>
 #include <ctre/Phoenix.h>
+#include <ctre/phoenix/motorcontrol/TalonFXSensorCollection.h>
 #include <AHRS.h>
 #include <CORERobotLib.h>
 #include <COREFramework/COREScheduler.h>
@@ -38,7 +39,10 @@ private:
 	AnalogInput m_analogPressureInput, m_analogSupplyVoltage;
     bool m_highGear;
     TalonFX m_leftMaster, m_rightMaster, m_leftSlave, m_rightSlave;
+
+	TalonFXSensorCollection m_leftSensor, m_rightSensor;
+
     COREConstant<double> m_etherAValue, m_etherBValue, m_etherQuickTurnValue, m_ticksPerInch;
-    DoubleSolenoid m_rightDriveShifter;
+    DoubleSolenoid m_driveShifter;
     Compressor m_compressor;
 };

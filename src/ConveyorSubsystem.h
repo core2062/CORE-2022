@@ -16,8 +16,7 @@ public:
     void teleop() override;
     void setConveyorMotor(double conveyorSpeed);
 
-    COREConstant<double> conveyorForwardSpeed;
-    COREConstant<double> conveyorReverseSpeed;
+    COREConstant<double> conveyorForwardSpeed, conveyorReverseSpeed;
 
 private:
     TalonSRX m_conveyorMotor;
