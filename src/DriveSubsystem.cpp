@@ -92,9 +92,11 @@ void DriveSubsystem::initTalons() {
     m_leftMaster.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor, 0, 0);
     m_rightMaster.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor, 0, 0);
 
-	m_rightMaster.SetSelectedSensorPosition(0.0);
-	m_leftMaster.SetSelectedSensorPosition(0.0);
+	// m_rightMaster.SetSelectedSensorPosition(0.0);
+	// m_leftMaster.SetSelectedSensorPosition(0.0);
 	
+	SetTalonMode(NeutralMode::Coast);
+
 	m_leftMaster.SetSensorPhase(false);
     m_rightMaster.SetSensorPhase(false);
 
@@ -119,8 +121,7 @@ void DriveSubsystem::toggleGear() {
 }
 
 void DriveSubsystem::resetEncoder(){
-	m_rightMaster.SetSelectedSensorPosition(0.0);
-	m_leftMaster.SetSelectedSensorPosition(0.0);
+	cout << "Reset encoder error value" <<  m_rightMaster.SetSelectedSensorPosition(0.0, 0, 25);
 }
 
 void DriveSubsystem::SetTalonMode(NeutralMode mode){
