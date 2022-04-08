@@ -40,10 +40,10 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
     m_encoderValue = driveSubsystem->getRobotPosition();
     switch(m_driveAction) {
         case FORWARD:
+            cout <<"Requested Drive Distance " << m_requestedDriveDistance << ", ";
+            cout <<"Encoder Value " << m_encoderValue << ", ";
+            cout <<"Encoder start up position " << m_encoderStartUpPosition << endl;    
             if(abs(m_encoderValue - m_encoderStartUpPosition) < m_requestedDriveDistance){
-                cout <<"Requested Drive Distance " << m_requestedDriveDistance << ", ";
-                cout <<"Encoder Value " << m_encoderValue << ", ";
-                cout <<"Encoder start up position " << m_encoderStartUpPosition << endl;
                 driveSubsystem->setMotorSpeed(0.3, DriveSide::BOTH);
                 return COREAutonAction::actionStatus::CONTINUE;
             } else{
@@ -52,11 +52,11 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
             }
             break;
         case BACKWARD:
+            cout << "Encoder Value: "    << m_encoderValue << ", ";
+            cout << "Start position: "   << m_encoderStartUpPosition << ", "; 
+            cout << "Movement setting: " << m_requestedDriveDistance << endl;
             if(m_encoderValue < m_encoderStartUpPosition + m_requestedDriveDistance){
                 driveSubsystem->setMotorSpeed(-0.3, DriveSide::BOTH);
-                cout << "Encoder Value: "    << m_encoderValue << ", ";
-                cout << "Start position: "   << m_encoderStartUpPosition << ", "; 
-                cout << "Movement setting: " << m_requestedDriveDistance << endl;
                 return COREAutonAction::actionStatus::CONTINUE;
             } else{
                 cout << "Stopping backup" << endl;

@@ -19,6 +19,8 @@ void ClimberSubsystem::robotInit(){
 
 void ClimberSubsystem::teleopInit() {
 	m_rightTalon.SetNeutralMode(NeutralMode::Brake);
+	m_climberPin = false;
+	toggleClimberSolenoid();
 }
 
 void ClimberSubsystem::teleop(){

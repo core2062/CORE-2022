@@ -6,8 +6,8 @@ OneBallRoutine::OneBallRoutine() : COREAuton("One Ball Routine") {}
 void OneBallRoutine::AddNodes() {
     delayNode = new Node(2, new DelayAction());
     delayNode2 = new Node(2, new DelayAction());
-    driveNode = new Node(5,new DriveAction(BACKWARD, 15000));
-    driveNode2 = new Node(5,new DriveAction(BACKWARD, 60000));
+    driveNode = new Node(5,new DriveAction(BACKWARD, 12));
+    driveNode2 = new Node(5,new DriveAction(BACKWARD, 36));
     launcherOnNode = new Node (5, new LauncherAction(LAUNCHER_FORWARD));
     launcherPunchNode = new Node (2, new LauncherAction(LAUNCH));
     AddFirstNode(launcherOnNode);

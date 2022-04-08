@@ -78,6 +78,7 @@ void DriveSubsystem::setMotorSpeed(double leftPercent, double rightPercent) {
 
 double DriveSubsystem::getRobotPosition() {
 	return m_rightSensor.GetIntegratedSensorPosition();
+	// return m_rightMaster.GetSelectedSensorPosition(0);
 }
 
 void DriveSubsystem::initTalons() {
