@@ -8,8 +8,6 @@ DriveSubsystem::DriveSubsystem() :
 		m_rightMaster(RIGHT_FRONT_PORT),
 		m_leftSlave(LEFT_BACK_PORT),
 		m_rightSlave(RIGHT_BACK_PORT),
-		m_leftSensor(m_leftMaster),
-		m_rightSensor(m_rightMaster),
 		m_etherAValue("Ether A Value", .6),
         m_etherBValue("Ether B Value", .4),
 		m_etherQuickTurnValue("Ether Quick Turn Value", 1.0),
@@ -77,8 +75,7 @@ void DriveSubsystem::setMotorSpeed(double leftPercent, double rightPercent) {
 }
 
 double DriveSubsystem::getRobotPosition() {
-	return m_rightSensor.GetIntegratedSensorPosition();
-	// return m_rightMaster.GetSelectedSensorPosition(0);
+	return m_rightMaster.GetSelectedSensorPosition(0);
 }
 
 void DriveSubsystem::initTalons() {
@@ -108,10 +105,7 @@ void DriveSubsystem::initTalons() {
 	m_leftSlave.SetInverted(false);
 	m_rightMaster.SetInverted(true);
 	m_rightSlave.SetInverted(true);
-
-	m_leftSensor.SetIntegratedSensorPosition(0);
-	m_rightSensor.SetIntegratedSensorPosition(0);
-
+ 
 	SetTalonMode(NeutralMode::Coast);
 }
 
