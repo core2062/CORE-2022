@@ -55,7 +55,7 @@ CORE::COREAutonAction::actionStatus DriveAction::Action() {
             cout << "Encoder Value: "    << m_encoderValue << ", ";
             cout << "Start position: "   << m_encoderStartUpPosition << ", "; 
             cout << "Movement setting: " << m_requestedDriveDistance << endl;
-            if(m_encoderValue < m_encoderStartUpPosition + m_requestedDriveDistance){
+            if(abs(m_encoderValue - m_encoderStartUpPosition) < m_requestedDriveDistance){
                 driveSubsystem->setMotorSpeed(-0.3, DriveSide::BOTH);
                 return COREAutonAction::actionStatus::CONTINUE;
             } else{
