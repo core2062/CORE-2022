@@ -30,4 +30,5 @@ private:
     Node * launcherPunchNode;
     Node * launcherPunchNode2;
     Node * launcherPunchNode3;
+    Node * LauncherFeedNode;
 };

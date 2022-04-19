@@ -8,7 +8,10 @@ using namespace CORE;
 enum launcherAction {
     LAUNCHER_FORWARD,
     LAUNCHER_OFF,
-    LAUNCH
+    LAUNCH,
+    LAUNCH_EXTEND,
+    LAUNCH_RETRACT,
+    LAUNCH_FEED
 };
 
 class LauncherAction : public COREAutonAction {
@@ -19,5 +22,5 @@ public:
     void ActionEnd() override;
 private:
     launcherAction m_launcherAction;
-    double m_launcherForward, m_launcherBackward;
+    double m_launcherForward, m_launcherBackward, m_launcherFeed;
 };
