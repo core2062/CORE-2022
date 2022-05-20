@@ -12,6 +12,7 @@ DriveSubsystem::DriveSubsystem() :
         m_etherBValue("Ether B Value", .4),
 		m_etherQuickTurnValue("Ether Quick Turn Value", 1.0),
         m_ticksPerInch("Ticks Per Inch", (4 * 3.1415) / 1024),
+		m_driveSpeedModifier("Drive speed Modifier", .5),
         // m_leftDriveShifter(frc::PneumaticsModuleType::REVPH, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
         m_driveShifter(frc::PneumaticsModuleType::REVPH, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
 		m_compressor(frc::PneumaticsModuleType::REVPH) {
@@ -70,8 +71,8 @@ void DriveSubsystem::setMotorSpeed(double speedInFraction, DriveSide whichSide) 
 
 void DriveSubsystem::setMotorSpeed(double leftPercent, double rightPercent) {
 	// Sets speed based on percent output desired
-	setMotorSpeed(leftPercent, DriveSide::LEFT);
-	setMotorSpeed(rightPercent, DriveSide::RIGHT);
+	setMotorSpeed(leftPercent* m_driveSpeedModifier.Get(), DriveSide::LEFT);
+	setMotorSpeed(rightPercent* m_driveSpeedModifier.Get(), DriveSide::RIGHT);
 }
 
 double DriveSubsystem::getRobotPosition() {

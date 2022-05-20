@@ -40,7 +40,7 @@ private:
     bool m_highGear;
     TalonFX m_leftMaster, m_rightMaster, m_leftSlave, m_rightSlave;
 
-    COREConstant<double> m_etherAValue, m_etherBValue, m_etherQuickTurnValue, m_ticksPerInch;
+    COREConstant<double> m_etherAValue, m_etherBValue, m_etherQuickTurnValue, m_ticksPerInch, m_driveSpeedModifier;
     DoubleSolenoid m_driveShifter;
     Compressor m_compressor;
 };
