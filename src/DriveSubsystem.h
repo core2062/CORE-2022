@@ -7,7 +7,9 @@
 #include <ctre/phoenix/motorcontrol/TalonFXSensorCollection.h>
 #include <AHRS.h>
 #include <CORERobotLib.h>
+#include <COREControl/COREPID.h>
 #include <COREFramework/COREScheduler.h>
+#include <networktables/NetworkTableInstance.h>
 #include <COREUtilities/CORETimer.h>
 #include "Config.h"
 
@@ -30,8 +32,12 @@ public:
 	void toggleGear();
 	void resetEncoder();
 	void SetTalonMode(NeutralMode mode);
+	double CalculateMotorFromVision();
+	void visionMovement();
+    nt::NetworkTableInstance ntinst;
+	COREConstant<double> m_KP, m_KI, m_KD, m_KF;
 	COREVector path;
-
+    COREPID corePID;
 	AHRS ahrs;
 
 private:
@@ -39,7 +45,8 @@ private:
 	AnalogInput m_analogPressureInput, m_analogSupplyVoltage;
     bool m_highGear;
     TalonFX m_leftMaster, m_rightMaster, m_leftSlave, m_rightSlave;
-
+ 	double m_centerError;
+    bool m_hasCenterX;
     COREConstant<double> m_etherAValue, m_etherBValue, m_etherQuickTurnValue, m_ticksPerInch, m_driveSpeedModifier;
     DoubleSolenoid m_driveShifter;
     Compressor m_compressor;
