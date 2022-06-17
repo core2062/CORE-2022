@@ -2,10 +2,10 @@
 
 DriveSubsystem::DriveSubsystem() :
 		ahrs(SPI::Port::kMXP),
-		m_KP("KP", 0.005),
+		m_KP("KP", 0.00005),
         m_KI("KI", 0),
         m_KD("KD", 0),
-        m_KF("KF", 1.5),
+        m_KF("KF", 1),
 		corePID(0, 0, 0, 1),
 		m_analogPressureInput(0),
 		m_analogSupplyVoltage(1),
