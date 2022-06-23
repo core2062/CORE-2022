@@ -2,7 +2,7 @@
 
 using namespace CORE;
 
-LauncherSubsystem::LauncherSubsystem() :    launcherForwardSpeed("Launcher Forward Speed", 0.25),
+LauncherSubsystem::LauncherSubsystem() :    launcherForwardSpeed("Launcher Forward Speed", 0.7),
                                             launcherLowSpeed("Launcher Low Speed", 0.2),
                                             launcherBackwardSpeed("Launcher Backward Speed", -0.7),
                                             launcherFeedDelayTime("Launcher Feed Delay", 1.5),
