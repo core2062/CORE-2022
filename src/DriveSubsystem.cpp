@@ -2,11 +2,6 @@
 
 DriveSubsystem::DriveSubsystem() :
 		ahrs(SPI::Port::kMXP),
-		m_KP("KP", 0.00005),
-        m_KI("KI", 0),
-        m_KD("KD", 0),
-        m_KF("KF", 1),
-		corePID(0, 0, 0, 1),
 		m_analogPressureInput(0),
 		m_analogSupplyVoltage(1),
 		m_leftMaster(LEFT_FRONT_PORT),
@@ -17,7 +12,7 @@ DriveSubsystem::DriveSubsystem() :
         m_etherBValue("Ether B Value", .4),
 		m_etherQuickTurnValue("Ether Quick Turn Value", 1.0),
         m_ticksPerInch("Ticks Per Inch", (4 * 3.1415) / 1024),
-		m_driveSpeedModifier("Drive speed Modifier", .5),
+		m_driveSpeedModifier("Drive speed Modifier", .75),
         // m_leftDriveShifter(frc::PneumaticsModuleType::REVPH, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
         m_driveShifter(frc::PneumaticsModuleType::REVPH, RIGHT_DRIVE_SHIFTER_HIGH_GEAR_PORT, RIGHT_DRIVE_SHIFTER_LOW_GEAR_PORT),
 		m_compressor(frc::PneumaticsModuleType::REVPH) {
@@ -25,24 +20,14 @@ DriveSubsystem::DriveSubsystem() :
 
 void DriveSubsystem::robotInit() {
 	// Registers joystick axis and buttons, does inital setup for talons
-    corePID.SetDerivativeConstant(m_KD.Get());
-    corePID.SetFeedForwardConstant(m_KF.Get());
-    corePID.SetIntegralConstant(m_KI.Get());
-    corePID.SetProportionalConstant(m_KP.Get());
 	driverJoystick->RegisterAxis(CORE::COREJoystick::LEFT_STICK_Y);
 	driverJoystick->RegisterAxis(CORE::COREJoystick::RIGHT_STICK_X);
 	driverJoystick->RegisterButton(CORE::COREJoystick::RIGHT_TRIGGER);
     initTalons();
-	ntinst = nt::NetworkTableInstance::GetDefault();
-    ntinst.StartClientTeam(2062);
 }
 
 void DriveSubsystem::teleopInit() {
 	// Sets ether drive values, inits talons
-    corePID.SetDerivativeConstant(m_KD.Get());
-    corePID.SetFeedForwardConstant(m_KF.Get());
-    corePID.SetIntegralConstant(m_KI.Get());
-    corePID.SetProportionalConstant(m_KP.Get());
 	COREEtherDrive::SetAB(m_etherAValue.Get(), m_etherBValue.Get());
 	COREEtherDrive::SetQuickturn(m_etherQuickTurnValue.Get());
 	initTalons();
@@ -69,9 +54,6 @@ void DriveSubsystem::teleop() {
 
 	if(driverJoystick->GetRisingEdge(CORE::COREJoystick::JoystickButton::RIGHT_TRIGGER)) {
 		toggleGear();
-	}
-	if(driverJoystick->GetButton(CORE::COREJoystick::JoystickButton::A_BUTTON)){
-		visionMovement();
 	}
 }
 
@@ -150,25 +132,4 @@ void DriveSubsystem::SetTalonMode(NeutralMode mode){
 	m_rightSlave.SetNeutralMode(mode);
 	m_leftMaster.SetNeutralMode(mode);
 	m_leftSlave.SetNeutralMode(mode);
-}
-double DriveSubsystem::CalculateMotorFromVision() {
-    // auto turret position
-    corePID.SetDerivativeConstant(m_KD.Get());
-    corePID.SetFeedForwardConstant(m_KF.Get());
-    corePID.SetIntegralConstant(m_KI.Get());
-    corePID.SetProportionalConstant(m_KP.Get());
-    auto table = ntinst.GetTable("limelight");
-    m_hasCenterX = table->GetNumber("tv", 0.0) == 1;
-    double conversion = -408.6862976; // convert degrees to ticks
-    // calculate center error as a percent output for the motor
-    m_centerError = table->GetNumber("tx", 0.0) * conversion;
-
-    SmartDashboard::PutNumber("Center Error", m_centerError);
-    SmartDashboard::PutBoolean("HasTable", m_hasCenterX);
-        return corePID.Calculate(m_centerError);
-
-}
-void DriveSubsystem::visionMovement(){
-		double motorMovement = CalculateMotorFromVision();
-		setMotorSpeed(-motorMovement,motorMovement);
 }

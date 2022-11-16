@@ -32,19 +32,13 @@ public:
 	void toggleGear();
 	void resetEncoder();
 	void SetTalonMode(NeutralMode mode);
-	double CalculateMotorFromVision();
-	void visionMovement();
-    nt::NetworkTableInstance ntinst;
-	COREConstant<double> m_KP, m_KI, m_KD, m_KF;
-	COREVector path;
-    COREPID corePID;
 	AHRS ahrs;
 
 private:
 	//m_analogSupplyVoltage used in calculation to get current PSI
 	AnalogInput m_analogPressureInput, m_analogSupplyVoltage;
     bool m_highGear;
-    TalonFX m_leftMaster, m_rightMaster, m_leftSlave, m_rightSlave;
+    TalonSRX m_leftMaster, m_rightMaster, m_leftSlave, m_rightSlave;
  	double m_centerError;
     bool m_hasCenterX;
     COREConstant<double> m_etherAValue, m_etherBValue, m_etherQuickTurnValue, m_ticksPerInch, m_driveSpeedModifier;
